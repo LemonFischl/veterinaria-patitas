@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Registrarse - Patitas Al Rescate</title>
+
+    <!-- Bootstrap & Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="/css/login_styles.css"/>
+</head>
+<body>
+<!-- Iconos flotantes -->
+<i class="bi bi-heart-pulse floating-icon icon-1"></i> <!-- Representa salud/veterinaria -->
+<i class="bi bi-shield-plus floating-icon icon-2"></i> <!-- Protección, seguro, bienestar animal -->
+<i class="bi bi-droplet-half floating-icon icon-3"></i> <!-- Agua/higiene -->
+<i class="bi bi-paw floating-icon icon-4"></i> <!-- Huella de mascota -->
+<i class="bi bi-bandaid floating-icon icon-5"></i> <!-- Cuidado, curación -->
+<i class="bi bi-house-heart floating-icon icon-6"></i> <!-- Refugio o adopción -->
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="login-card p-5">
+                <div class="text-center mb-4">
+                    <h1 class="h3 brand-logo fw-bold mb-2">Patitas al Rescate</h1>
+                    <p class="text-muted">Crear una nueva cuenta</p>
+                </div>
+
+                <!-- Mensaje de éxito -->
+                <div th:if="${exito}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <span th:text="${exito}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <!-- Mensaje de error -->
+                <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span th:text="${error}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <form method="post" th:action="@{/auth/guardar}" th:object="${usuarioRegister}">
+                    <input type="hidden" th:field="*{id_usuario}"/>
+
+                    <div class="mb-4">
+                        <label for="username" class="form-label fw-semibold">
+                            <i class="bi bi-person-circle text-primary  me-2 "></i>Usuario
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                              <i class="bi bi-person text-muted"></i>
+                            </span>
+                            <input type="text" class="form-control border-start-0 ps-0" id="username"
+                                   th:field="*{username}" placeholder="Ingresa tu usuario" required autofocus/>
+                            <div class="text-danger" th:if="${#fields.hasErrors('username')}"
+                                 th:errors="*{username}"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-semibold">
+                            <i class="bi bi-shield-lock text-primary me-2"></i>Contraseña
+                        </label>
+                        <div class="input-group">
+                             <span class="input-group-text bg-light border-end-0">
+                                  <i class="bi bi-lock text-muted"></i>
+                            </span>
+                            <input type="password" class="form-control border-start-0 ps-0" id="password"
+                                   placeholder="Ingresa tu contraseña" th:field="*{password}" required/>
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword"
+                                    title="Mostrar/ocultar contraseña">
+                                <i class="bi bi-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('password')}"
+                             th:errors="*{password}"></div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label fw-semibold">
+                            <i class="bi bi-person-fill me-2 text-primary"></i>Nombre completo
+                        </label>
+                        <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required/>
+                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label fw-semibold">
+                            <i class="bi bi-envelope-at me-2 text-primary"></i>Correo electrónico
+                        </label>
+                        <input type="email" class="form-control" id="email" th:field="*{email}" required/>
+                        <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="celular" class="form-label fw-semibold">
+                            <i class="bi bi-phone me-2 text-primary"></i>Celular
+                        </label>
+                        <input type="text" class="form-control" id="celular" th:field="*{celular}" required/>
+                        <div class="text-danger" th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}"></div>
+                    </div>
+
+                    <!-- Para seleccionar los roles-->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-person-gear me-2 text-primary"></i>Rol(es)
+                        </label>
+
+                        <div th:each="rol : ${listaRoles}" class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   th:field="*{roles}"
+                                   th:value="${rol.id}"
+                                   th:id="${'rol_' + rol.id}" />
+
+                            <label class="form-check-label" th:for="${'rol_' + rol.id}">
+                                <span th:switch="${rol.name.name()}">
+                                    <span th:case="'ROLE_ADMIN'">Administrador</span>
+                                    <span th:case="'ROLE_VET'">Veterinaria</span>
+                                    <span th:case="'ROLE_PACIENTE'">Paciente</span>
+                                    <span th:case="*">Otro</span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="bi bi-person-plus me-2"></i> Registrarse
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Enlace a login -->
+                <div class="text-center mt-4">
+                    <p class="text-muted">¿Ya tienes una cuenta?</p>
+                    <a href="/auth/login" class="btn btn-outline-primary">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar sesión
+                    </a>
+                </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="text-center mt-4">
+                <small class="text-white-50">
+                    <i class="bi bi-info-circle me-1"></i> © Patitas al rescate.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script personalizado -->
+<script src="/js/register_scripts.js"></script>
+</body>
+</html>

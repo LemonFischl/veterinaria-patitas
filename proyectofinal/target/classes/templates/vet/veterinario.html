@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patitas al Rescate - Gestión de Veterinario</title>
+    <!--Librerías css-->
+    <th:block th:insert="~{fragmentos :: Links-css}"/>
+</head>
+<body>
+<!--Cabecera-->
+<div th:replace="~{fragmentos :: Cabecera}"></div>
+
+<div class="container-fluid mt-4 mb-5 px-4">
+    <div class="row g-4">
+        <!-- FORMULARIO DE REGISTRO -->
+        <div class="col-lg-5 col-md-6">
+            <div class="form-card">
+                <div class="card-header-custom">
+                    <h4 class="mb-0">
+                        <i class="bi bi-clipboard-plus me-2"></i>Registrar Veterinario
+                    </h4>
+                </div>
+
+                <div class="p-4">
+                    <form method="post" th:action="@{/vet/veterinario/guardar}" th:object="${veterinario}" class="compact-form">
+                        <!-- Mensaje de éxito -->
+                        <div th:if="${exito}" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="bi bi-check-circle-fill me-2"></i>
+                            <span th:text="${exito}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <!-- Mensaje de error -->
+                        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <span th:text="${error}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <input type="hidden" th:field="*{id_veterinario}" />
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="bi bi-person-badge text-primary me-1"></i>Nombre del Veterinario
+                            </label>
+                            <input type="text" class="form-control" th:field="*{nombre}" placeholder="Ej: Dr. Juan Pérez" />
+                            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="bi bi-award text-primary me-1"></i>Especialidad
+                            </label>
+                            <select th:field="*{especialidad}" class="form-select">
+                                <option value="" disabled selected>Seleccione</option>
+                                <option th:value="CIRUGIA">Cirugía</option>
+                                <option th:value="DERMATOLOGIA">Dermatología</option>
+                                <option th:value="CARDIOLOGIA">Cardiología</option>
+                                <option th:value="ONCOLOGIA">Oncología</option>
+                                <option th:value="OFTALMOLOGIA">Oftalmología</option>
+                            </select>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    <i class="bi bi-phone text-primary me-1"></i>Celular
+                                </label>
+                                <input type="text" class="form-control" th:field="*{celular}" placeholder="Ej: 987654321" />
+                                <div th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}" class="text-danger"></div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    <i class="bi bi-envelope text-primary me-1"></i>Correo Electrónico
+                                </label>
+                                <input type="email" class="form-control" th:field="*{correo}" placeholder="Ej: veterinario@correo.com" />
+                                <div th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}" class="text-danger"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="bi bi-clock text-primary me-1"></i>Horario de Atención
+                            </label>
+                            <input type="text" class="form-control" th:field="*{horarioAtencion}" placeholder="Ej: 9:00 AM - 5:00 PM" />
+                            <div th:if="${#fields.hasErrors('horarioAtencion')}" th:errors="*{horarioAtencion}" class="text-danger"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="bi bi-calendar-event text-primary me-1"></i>Fecha de Contratación
+                            </label>
+                            <input type="date" class="form-control" th:field="*{fechaContratacion}" />
+                            <div th:if="${#fields.hasErrors('fechaContratacion')}" th:errors="*{fechaContratacion}" class="text-danger"></div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <i class="bi bi-hospital text-primary me-1"></i>Veterinaria
+                            </label>
+                            <select th:field="*{veterinaria.id_vet}" class="form-select">
+                                <option th:value="'0'" th:text="'Seleccione una veterinaria'" th:if="${#fields.hasErrors('veterinaria') or #fields.hasErrors('veterinaria.id_vet')}" selected></option>
+                                <option th:each="vet : ${veterinarias}" th:value="${vet.id_vet}" th:text="${vet.nombre}"></option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('veterinaria')}" th:errors="*{veterinaria}" class="text-danger"></div>
+                            <div th:if="${#fields.hasErrors('veterinaria.id_vet')}" th:errors="*{veterinaria.id_vet}" class="text-danger"></div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <button type="submit" class="btn btn-success px-4">
+                                <i class="bi bi-check-circle me-2"></i>Guardar
+                            </button>
+                            <a href="/vet/veterinario/nuevo" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-x-circle me-2"></i>Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLA DE VETERINARIOS -->
+        <div class="col-lg-7 col-md-6">
+            <div class="table-card">
+                <div class="card-header-custom justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="bi bi-person-badge me-2"></i>Lista de Veterinarios
+                    </h4>
+                </div>
+                <div class="table-responsive px-3 pb-3 pe-4">
+                    <table class="tablaData table table-compact table-hover mb-0">
+                        <thead class="text-center">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Especialidad</th>
+                            <th>Celular</th>
+                            <th>Correo</th>
+                            <th>Horario</th>
+                            <th class="text-start">Contratación</th>
+                            <th>Veterinaria</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="v : ${veterinarios}" class="align-middle">
+                            <td class="text-center fw-bold" th:text="${v.id_veterinario}"></td>
+                            <td th:text="${v.nombre}" class="text-truncate" style="max-width: 140px;"></td>
+                            <td th:text="${v.especialidad}" class="text-truncate"></td>
+                            <td th:text="${v.celular}" class="text-truncate"></td>
+                            <td th:text="${v.correo}" class="text-truncate"></td>
+                            <td th:text="${v.horarioAtencion}" class="text-truncate"></td>
+                            <td th:text="${#temporals.format(v.fechaContratacion, 'dd/MM/yyyy')}"
+                                th:attr="data-order=${#temporals.format(v.fechaContratacion, 'yyyy-MM-dd')}" class="text-truncate"></td>
+                            <td th:text="${v.veterinaria != null ? v.veterinaria.nombre : 'Sin asignar'}"></td>
+                            <td class="text-center action-buttons">
+                                <a th:href="@{/vet/veterinario/editar(id=${v.id_veterinario})}" class="btn btn-sm btn-outline-primary btn-action" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                                   th:href="@{/vet/veterinario/eliminar(id=${v.id_veterinario})}"
+                                   class="btn btn-sm btn-outline-danger btn-action" title="Eliminar"
+                                   onclick="return confirm('¿Seguro que desea eliminar este veterinario?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Footer-->
+<footer class="footer mt-auto mt-2 text-white" th:insert="~{fragmentos :: Pie}"></footer>
+
+<!-- Librerías de js -->
+<th:block th:insert="~{fragmentos :: Links-js}"/>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar Sesión - Patitas Al Rescate</title>
+
+    <!-- Bootstrap y Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="/css/login_styles.css" />
+</head>
+<body>
+<!-- Iconos flotantes de fondo -->
+<i class="bi bi-heart-pulse floating-icon icon-1"></i> <!-- Representa salud/veterinaria -->
+<i class="bi bi-shield-plus floating-icon icon-2"></i> <!-- Protección, seguro, bienestar animal -->
+<i class="bi bi-droplet-half floating-icon icon-3"></i> <!-- Agua/higiene -->
+<i class="bi bi-paw floating-icon icon-4"></i> <!-- Huella de mascota -->
+<i class="bi bi-bandaid floating-icon icon-5"></i> <!-- Cuidado, curación -->
+<i class="bi bi-house-heart floating-icon icon-6"></i> <!-- Refugio o adopción -->
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="login-card p-5">
+                <div class="text-center mb-4">
+                    <div class="mb-3"></div>
+                    <h1 class="h3 brand-logo fw-bold mb-2">Patitas al Rescate</h1>
+                    <p class="text-muted"></p>
+                </div>
+
+                <!-- Alertas -->
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.error}">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    <strong>Error:</strong> Usuario o contraseña incorrectos.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de error"></button>
+                </div>
+                <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${param.logout}">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Has cerrado sesión correctamente.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
+                </div>
+
+                <!-- Formulario -->
+                <form method="post" th:action="@{/login}">
+                    <div class="mb-4">
+                        <label for="username" class="form-label fw-semibold">
+                            <i class="bi bi-person-circle text-primary me-2"></i>Usuario
+                        </label>
+                        <div class="input-group">
+                <span class="input-group-text bg-light border-end-0">
+                  <i class="bi bi-person text-muted"></i>
+                </span>
+                            <input type="text" class="form-control border-start-0 ps-0" id="username" name="username" placeholder="Ingresa tu usuario" required autofocus />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-semibold">
+                            <i class="bi bi-shield-lock text-primary me-2"></i>Contraseña
+                        </label>
+                        <div class="input-group">
+                <span class="input-group-text bg-light border-end-0">
+                  <i class="bi bi-lock text-muted"></i>
+                </span>
+                            <input type="password" class="form-control border-start-0 ps-0" id="password" name="password" placeholder="Ingresa tu contraseña" required />
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword" title="Mostrar/ocultar contraseña">
+                                <i class="bi bi-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="remember-me" name="remember-me" />
+                            <label class="form-check-label" for="remember-me">
+                                <i class="bi bi-bookmark-heart me-1"></i> Recordar mi sesión
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mb-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-box-arrow-in-right me-2"></i> Iniciar Sesión
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Enlaces adicionales -->
+                <div class="text-center">
+                    <div class="mb-3">
+                        <a href="/recuperar-password" class="text-decoration-none">
+                            <i class="bi bi-key me-1"></i> ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+                    <div class="mb-3">
+                        <p class="mb-1 text-muted">¿No tienes cuenta?</p>
+                        <a href="/auth/nuevo" class="btn btn-outline-primary">
+                            <i class="bi bi-person-plus me-1"></i>Registrarse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="text-center mt-4">
+                <small class="text-white-50">
+                    <i class="bi bi-info-circle me-1"></i> © 2025 Patitas al Rescate.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script personalizado -->
+<script src="/js/login_scripts.js"></script>
+</body>
+</html>
