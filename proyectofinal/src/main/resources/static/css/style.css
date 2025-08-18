@@ -184,7 +184,6 @@ h3.mb-4 {
     color: #2c3e50;
     font-weight: bold;
 
-/* Inputs y textareas */
 .form-control {
     border-radius: 8px;
     border: 1px solid #ced4da;
@@ -194,7 +193,6 @@ h3.mb-4 {
     border-color: #28a745;
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 
-/* Etiquetas de radio */
 .form-check-label {
     margin-left: 6px;
     color: #555;
@@ -203,16 +201,13 @@ h3.mb-4 {
     background-color: #28a745;
     border-color: #28a745;
 
-/* Comentarios */
 textarea.form-control {
     resize: vertical;
     border-radius: 8px;
 
-/* Checkbox */
 .form-check-label {
     user-select: none;
 
-/* Botón enviar */
 button.btn-success {
     padding: 10px 25px;
     font-size: 1rem;
