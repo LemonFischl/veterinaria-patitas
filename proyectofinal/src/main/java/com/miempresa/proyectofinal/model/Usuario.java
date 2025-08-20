@@ -13,8 +13,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "usuario") // NOMBRE DE TABLA ACTUALIZADO A 'usuario'
+@Inheritance(strategy = InheritanceType.JOINED)
 @UniqueEmail // validador
-public class Usuario implements UserDetails { // UserDetails para representar un usuario autenticado dentro de la aplicación
+public abstract class Usuario implements UserDetails { // UserDetails para representar un usuario autenticado dentro de la aplicación
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_usuario;
@@ -46,9 +47,9 @@ public class Usuario implements UserDetails { // UserDetails para representar un
     @Digits(integer = 9, fraction = 0, message = "El celular debe contener exactamente 9 dígitos")
     private String celular;
 
-    // --- Relación con MASCOTAS
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Mascota> mascotas;
+//    // --- Relación con MASCOTAS
+//    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Mascota> mascotas;
 
     // Relación muchos a muchos con roles (Hará que se cree una tabla intermedia para la relación)
     @ManyToMany(fetch = FetchType.LAZY)
@@ -99,7 +100,7 @@ public class Usuario implements UserDetails { // UserDetails para representar un
         this.password = password;
         this.email = email;
         this.celular = celular;
-        this.mascotas = mascotas; // Adaptado
+//        this.mascotas = mascotas; // Adaptado
         this.roles = roles;
     }
 
@@ -124,9 +125,9 @@ public class Usuario implements UserDetails { // UserDetails para representar un
     public String getCelular() { return celular; }
     public void setCelular(String celular) { this.celular = celular; }
 
-    // --- CAMBIO CLAVE: Getters y Setters
-    public List<Mascota> getMascotas() { return mascotas; }
-    public void setMascotas(List<Mascota> mascotas) { this.mascotas = mascotas; }
+//    // --- CAMBIO CLAVE: Getters y Setters
+//    public List<Mascota> getMascotas() { return mascotas; }
+//    public void setMascotas(List<Mascota> mascotas) { this.mascotas = mascotas; }
 
     public Set<Role> getRoles() { return roles; }
     public void setRoles(Set<Role> roles) { this.roles = roles; }
