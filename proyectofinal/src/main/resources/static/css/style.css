@@ -101,9 +101,10 @@ body {
 
 /* Footer */
 .footer {
-    background-color: #27187E;
+    background-color: #F5F5F5;
     padding: 20px;
     text-align: center;
+    height:400px;
 }
 
 .card .img-fluid {
@@ -180,11 +181,11 @@ body {
 
 .social-icons i {
     font-size: 24px;
-    color: #333;
+    color: #091C4F;
     background-color: white;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -195,8 +196,24 @@ body {
     color: #FAB41B;
 }
 
+/*LISTA DE ELEMENTOS DE FOOTER*/
+.list-items {
+    list-style: none;
+    margin-bottom: 4px;
+}
 
+.list-items a {
+    display: block;
+    text-align: left;
+    color: #091C4F;
+    font-size: 0.9rem;
+    font-family: "DM Sans", sans-serif;
+    text-decoration: none;
+}
 
+.list-items a:hover {
+    color: #FAB41B;
+}
 
 
 /*CONTACTO*/
@@ -252,3 +269,7 @@ button.btn-success:hover {
         padding: 20px;
     }
 }
+
+
+/*IMPORTACIÓN DE FUENTES (IMPORTANTE: CREAR UN FONTS.CSS)*/
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
