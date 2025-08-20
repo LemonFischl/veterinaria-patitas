@@ -50,7 +50,7 @@ public class Usuario implements UserDetails { // UserDetails para representar un
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Mascota> mascotas;
 
-    // Relación muchos a muchos con roles (Hara que se cre una tabla intermedia para la relación)
+    // Relación muchos a muchos con roles (Hará que se cree una tabla intermedia para la relación)
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "usuario_roles",
             joinColumns = @JoinColumn(name = "usuario_id"),
