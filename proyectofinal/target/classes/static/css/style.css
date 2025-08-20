@@ -102,9 +102,9 @@ body {
 /* Footer */
 .footer {
     background-color: #F5F5F5;
-    padding: 20px;
+    padding-top: 80px;
     text-align: center;
-    height:400px;
+    align-content:end;
 }
 
 .card .img-fluid {
@@ -199,6 +199,10 @@ body {
 /*LISTA DE ELEMENTOS DE FOOTER*/
 .list-items {
     list-style: none;
+    font-family: "DM Sans", sans-serif;
+    font-size:0.9rem;
+    color: #444444;
+    transition: color 0.2s ease;
 }
 .footer-links {
    padding-left:0;
@@ -206,18 +210,26 @@ body {
 .list-items a {
     display: block;
     text-align: left;
-    color: #091C4F;
+    color: #444444;
     font-size: 0.9rem;
     font-family: "DM Sans", sans-serif;
     text-decoration: none;
     transition: color 0.2s ease;
+    margin-bottom: 8px;
 }
 
-.list-items a:hover {
+.list-items a:hover{
     color: #FAB41B;
-
+}
+.list-items:hover {
+    color:#FAB41B;
 }
 
+.content-90 {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /*CONTACTO*/
 form.container {
