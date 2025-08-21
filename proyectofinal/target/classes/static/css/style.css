@@ -4,22 +4,35 @@ body {
 
 .morado {
     background-color: #27187E;
-    color: #FFFFFF;
+    color: #091C4F;
 
 }
 
 
 /* Barra de navegacion */
 .navbar {
-    background-color: #27187E;
-    color: #FFFFFF;
+    background-color: white;
+    color: #091C4F;
 }
 
 .navbar-brand,
 .navbar-nav .nav-link,
 .navbar-nav .dropdown-toggle,
 #btn-contact {
-    color: #FFFFFF !important;
+    color: #091C4F;
+}
+
+
+.custom-navbar-collapse {
+    flex-grow: 0 !important;
+    flex-basis: auto;
+}
+
+@media (max-width: 991.98px) {
+    .custom-navbar-collapse {
+        flex-basis: 100% !important;
+        flex-grow: 1 !important;
+    }
 }
 
 #navbarSupportedContent {
@@ -28,7 +41,16 @@ body {
 }
 
 .dropdown-menu {
-    background-color: #758BFD;
+    background-color: white;
+}
+
+.navbar-nav {
+     gap: 1rem;
+     font-family: "Roboto", sans-serif;
+     font-weight:800;
+}
+
+.navbar-nav {
 }
 
 /* Carrusel */
@@ -89,6 +111,7 @@ body {
 
 #carouselExampleIndicators {
     max-width: 100%;
+    height:90vh;
     margin: auto;
     position: relative;
     overflow: hidden;
@@ -105,6 +128,11 @@ body {
     padding-top: 110px;
     text-align: center;
     align-content:end;
+}
+@media (max-width: 768px) {
+   .footer {
+       padding-top: 30px;
+   }
 }
 
 .card .img-fluid {
@@ -238,10 +266,15 @@ body {
     color:#FAB41B;
 }
 
-.content-88 {
-  width: 88%;
+.content-75 {
+  width: 75%;
   margin-left: auto;
   margin-right: auto;
+}
+@media (max-width: 768px) {
+    .content-75 {
+        width: 100%;
+    }
 }
 
 /*CONTACTO*/
@@ -301,3 +334,4 @@ button.btn-success:hover {
 
 /*IMPORTACIÓN DE FUENTES (IMPORTANTE: CREAR UN FONTS.CSS)*/
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
