@@ -26,6 +26,10 @@ public class Controladores {
         model.addAttribute("veterinarias", activas);
         return "veterinarias";
     }
+    @GetMapping("/adopcion")
+    public String adopcion() {
+        return "adopcion";
+    }
 
     @GetMapping("/contacto")
     private String contacto(){
