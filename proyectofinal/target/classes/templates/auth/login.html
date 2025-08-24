@@ -69,35 +69,19 @@
         </form>
 
 
-        <form id="signUpForm" class="formulario hidden" method="post" th:action="@{/auth/guardar}"
-              th:object="${usuarioRegister}">
-            <!-- Mensaje de éxito -->
-            <div th:if="${exito}" class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle-fill me-2"></i>
-                <span th:text="${exito}"></span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
 
-            <!-- Mensaje de error -->
-            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                <span th:text="${error}"></span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
 
             <input type="hidden" th:field="*{id_usuario}"/>
 
             <div class="form-group">
                 <label for="usernameRegister">Usuario</label>
                 <input type="text" id="usernameRegister" th:field="*{username}" placeholder="Crea tu usuario" required/>
-                <div class="aviso" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
             </div>
 
             <div class="form-group">
 
                 <label for="passwordRegister">Contraseña</label>
-                <input type="password" id="passwordRegister" th:field="*{password}" placeholder="Crea una contraseña"
-                       required/>
+                <input type="password" id="passwordRegister" th:field="*{password}" placeholder="Crea una contraseña" required />
                 <span>mínimo 8 caracteres, con mayúscula, minúscula, número y carácter especial.</span>
                 <div class="aviso" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
 
@@ -118,7 +102,6 @@
             <div class="form-group">
                 <label for="celularRegister">Celular</label>
                 <input type="text" id="celularRegister" th:field="*{celular}" placeholder="Ingresa tu celular" required/>
-                <div class="aviso" th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}"></div>
             </div>
 
             <button type="submit" class="btn">Registrarse</button>

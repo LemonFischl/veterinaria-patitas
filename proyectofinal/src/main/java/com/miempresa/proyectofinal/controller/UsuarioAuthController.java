@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/auth")
 public class UsuarioAuthController {
-
     private final UsuarioService usuarioService;
     private final RoleService roleService;
 
@@ -24,7 +23,7 @@ public class UsuarioAuthController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/login")
+    @GetMapping("/nuevo")
     public String mostrarFormularioRegistro(@RequestParam(name = "exito", required = false) String exito,
                                             Model model) {
         Usuario usuario = new Usuario();
@@ -32,7 +31,6 @@ public class UsuarioAuthController {
 
         // Solo se pasa la lista completa de roles al template, para usar en checkbox si quieres
         model.addAttribute("listaRoles", roleService.listarRoles());
-
         if (exito != null) {
             model.addAttribute("exito", exito);
         }

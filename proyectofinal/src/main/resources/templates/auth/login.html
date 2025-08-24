@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Iniciar Sesión - Patitas Al Rescate</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <link rel="stylesheet" href="/css/login_styles.css" />
+    <link rel="stylesheet" href="/css/login_styles.css"/>
 </head>
 <body>
 <div class="container-general">
@@ -29,7 +29,6 @@
             <button class="tab active" id="signInTab">Iniciar Sesión</button>
             <button class="tab" id="signUpTab">Registrarse</button>
         </div>
-
 
 
         <div class="alerta error" th:if="${param.error}">
@@ -57,7 +56,7 @@
             </div>
 
             <div class="remember">
-                <input type="checkbox" id="remember-me" name="remember-me" />
+                <input type="checkbox" id="remember-me" name="remember-me"/>
                 <label for="remember-me">Recordar mi sesión</label>
             </div>
 
@@ -69,8 +68,7 @@
         </form>
 
 
-        <form id="signUpForm" class="formulario hidden" method="post" th:action="@{/auth/guardar}"
-              th:object="${usuarioRegister}">
+        <form id="signUpForm" class="formulario hidden" method="post" th:action="@{/auth/guardar}" th:object="${usuarioRegister}">
             <!-- Mensaje de éxito -->
             <div th:if="${exito}" class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="bi bi-check-circle-fill me-2"></i>
@@ -96,8 +94,7 @@
             <div class="form-group">
 
                 <label for="passwordRegister">Contraseña</label>
-                <input type="password" id="passwordRegister" th:field="*{password}" placeholder="Crea una contraseña"
-                       required/>
+                <input type="password" id="passwordRegister" th:field="*{password}" placeholder="Crea una contraseña" required />
                 <span>mínimo 8 caracteres, con mayúscula, minúscula, número y carácter especial.</span>
                 <div class="aviso" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
 
