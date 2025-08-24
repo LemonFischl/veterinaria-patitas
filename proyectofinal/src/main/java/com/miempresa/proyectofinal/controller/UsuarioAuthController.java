@@ -37,19 +37,25 @@ public class UsuarioAuthController {
                                  BindingResult result,
                                  Model model) {
 
+        // VALIDACIONES
+        if (usuario.getRoles() == null || usuario.getRoles().isEmpty()) {
+            result.rejectValue("roles", "error.usuario", "Seleccione al menos un rol.");
+        }
+
+        if (usuarioService.existeUsername(usuario)) {
+            result.rejectValue("username", "error.usuario", "El nombre de usuario ya está ocupado.");
+        }
+
+        if (usuarioService.existeEmail(usuario)) {
+            result.rejectValue("email", "error.usuario", "El correo electrónico ya está registrado.");
+        }
+
         if (result.hasErrors()) {
             model.addAttribute("listaRoles", roleService.listarRoles());
             return "auth/login";
         }
 
         try {
-            // Validar roles
-            if (usuario.getRoles() == null || usuario.getRoles().isEmpty()) {
-                model.addAttribute("listaRoles", roleService.listarRoles());
-                model.addAttribute("error", "Debe seleccionar al menos un rol");
-                return "auth/login";
-            }
-
             // Guardar usuario
             usuarioService.guardarUsuario(usuario);
 

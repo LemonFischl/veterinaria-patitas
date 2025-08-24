@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Iniciar Sesión - Patitas Al Rescate</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <link rel="stylesheet" href="/css/login_styles.css" />
+    <link rel="stylesheet" href="/css/login_styles.css"/>
 </head>
 <body>
 <div class="container-general">
@@ -31,7 +31,6 @@
         </div>
 
 
-
         <div class="alerta error" th:if="${param.error}">
             <i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Usuario o contraseña incorrectos.
         </div>
@@ -40,29 +39,25 @@
         </div>
 
 
-
-
-
-
-
         <form id="signInForm" class="formulario" method="post" th:action="@{/login}">
             <div class="form-group">
                 <label for="username"><i class="fa-solid fa-user"></i> Usuario</label>
-                <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required autofocus />
+                <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required autofocus/>
             </div>
 
             <div class="form-group">
                 <label for="password"><i class="fa-solid fa-lock"></i> Contraseña</label>
                 <div class="password-wrapper">
-                    <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required />
-                    <button type="button" class="toggle-password" id="togglePassword" title="Mostrar/ocultar contraseña">
+                    <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required/>
+                    <button type="button" class="toggle-password" id="togglePassword"
+                            title="Mostrar/ocultar contraseña">
                         <i class="fa-solid fa-eye" id="toggleIcon"></i>
                     </button>
                 </div>
             </div>
 
             <div class="remember">
-                <input type="checkbox" id="remember-me" name="remember-me" />
+                <input type="checkbox" id="remember-me" name="remember-me"/>
                 <label for="remember-me">Recordar mi sesión</label>
             </div>
 
@@ -74,55 +69,74 @@
         </form>
 
 
+        <form id="signUpForm" class="formulario hidden" method="post" th:action="@{/auth/guardar}"
+              th:object="${usuarioRegister}">
+            <!-- Mensaje de éxito -->
+            <div th:if="${exito}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                <span th:text="${exito}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
 
+            <!-- Mensaje de error -->
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
 
-
-        <form id="signUpForm" class="formulario hidden" method="post" th:action="@{/auth/guardar}" th:object="${usuarioRegister}">
             <input type="hidden" th:field="*{id_usuario}"/>
 
             <div class="form-group">
                 <label for="usernameRegister">Usuario</label>
-                <input type="text" id="usernameRegister" th:field="*{username}" placeholder="Crea tu usuario" required />
+                <input type="text" id="usernameRegister" th:field="*{username}" placeholder="Crea tu usuario" required/>
+                <div class="aviso" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
             </div>
 
             <div class="form-group">
 
                 <label for="passwordRegister">Contraseña</label>
-                <input type="password" id="passwordRegister" th:field="*{password}" placeholder="Crea una contraseña" required />
+                <input type="password" id="passwordRegister" th:field="*{password}" placeholder="Crea una contraseña"
+                       required/>
                 <span>mínimo 8 caracteres, con mayúscula, minúscula, número y carácter especial.</span>
                 <div class="aviso" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
 
             </div>
             <div class="form-group">
                 <label for="nombre">Nombre completo:</label>
-                <input type="text" id="nombre" th:field="*{nombre}" required />
+                <input type="text" id="nombre" th:field="*{nombre}" required/>
                 <span class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
             </div>
 
             <div class="form-group">
                 <label for="emailRegister">Correo</label>
-                <input type="email" id="emailRegister" th:field="*{email}" placeholder="Ingresa tu correo" required />
+                <input type="email" id="emailRegister" th:field="*{email}" placeholder="Ingresa tu correo" required/>
                 <div class="aviso" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 
             </div>
 
             <div class="form-group">
                 <label for="celularRegister">Celular</label>
-                <input type="text" id="celularRegister" th:field="*{celular}" placeholder="Ingresa tu celular" required />
+                <input type="text" id="celularRegister" th:field="*{celular}" placeholder="Ingresa tu celular"
+                       required/>
+                <div class="aviso" th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}"></div>
             </div>
 
-            <div th:each="rol : ${listaRoles}" class="form-check">
-                <input class="form-check-input" type="checkbox"
-                       th:field="*{roles}" th:value="${rol.id}"
-                       th:id="${'rol_' + rol.id}"/>
+            <div class="border rounded p-3" style="background-color: #f8f9fa;">
+                <div th:each="rol : ${listaRoles}" class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           th:field="*{roles}" th:value="${rol.id}"
+                           th:id="${'rol_' + rol.id}"/>
 
-                <label class="form-check-label" th:for="${'rol_' + rol.id}">
-        <span th:switch="${rol.name.name()}">
-            <span th:case="'ROLE_ADMIN'">Administrador</span>
-            <span th:case="'ROLE_VET'">Veterinaria</span>
-            <span th:case="'ROLE_PACIENTE'">Paciente</span>
-        </span>
-                </label>
+                    <label class="form-check-label" th:for="${'rol_' + rol.id}">
+                        <span th:switch="${rol.name.name()}">
+                            <span th:case="'ROLE_ADMIN'">Administrador</span>
+                            <span th:case="'ROLE_VET'">Veterinaria</span>
+                            <span th:case="'ROLE_PACIENTE'">Paciente</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="aviso" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></div>
             </div>
 
             <button type="submit" class="btn">Registrarse</button>
@@ -169,7 +183,6 @@ document.getElementById('togglePassword').addEventListener('click', function () 
             icon.classList.toggle('fa-eye-slash');
         });
 </script>
-
 
 
 </body>
