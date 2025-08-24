@@ -1,6 +1,7 @@
 package com.miempresa.proyectofinal.controller;
 
 import com.miempresa.proyectofinal.model.Usuario;
+import com.miempresa.proyectofinal.model.Role;
 import com.miempresa.proyectofinal.service.RoleService;
 import com.miempresa.proyectofinal.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -9,6 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/auth")
@@ -23,9 +28,9 @@ public class UsuarioAuthController {
     }
 
     @GetMapping("/nuevo")
-    public String mostrarFormularioRegistro(@RequestParam(name = "exito", required = false) String exito, Model model) {
+    public String mostrarFormularioRegistro(@RequestParam(name = "exito", required = false) String exito,
+                                            Model model) {
         model.addAttribute("usuarioRegister", new Usuario());
-        model.addAttribute("listaRoles", roleService.listarRoles());
         if (exito != null) {
             model.addAttribute("exito", exito);
         }
@@ -38,26 +43,23 @@ public class UsuarioAuthController {
                                  Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("listaRoles", roleService.listarRoles());
             return "auth/login";
         }
 
         try {
-            // Validar roles
-            if (usuario.getRoles() == null || usuario.getRoles().isEmpty()) {
-                model.addAttribute("listaRoles", roleService.listarRoles());
-                model.addAttribute("error", "Debe seleccionar al menos un rol");
-                return "auth/login";
-            }
+            Role rolPaciente = roleService.listarRoles().stream()
+                    .filter(r -> r.getName().name().equals("ROLE_PACIENTE"))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Rol PACIENTE no encontrado"));
 
-            // Guardar usuario
+            usuario.setRoles(Set.of(rolPaciente));
+
             usuarioService.guardarUsuario(usuario);
 
             String mensajeExito = "¡Usuario registrado exitosamente!";
-            return "redirect:/auth/login?exito=" + java.net.URLEncoder.encode(mensajeExito, java.nio.charset.StandardCharsets.UTF_8);
+            return "redirect:/auth/login?exito=" + URLEncoder.encode(mensajeExito, StandardCharsets.UTF_8);
 
         } catch (Exception e) {
-            model.addAttribute("listaRoles", roleService.listarRoles());
             model.addAttribute("error", "Error al registrar usuario: " + e.getMessage());
             return "auth/login";
         }

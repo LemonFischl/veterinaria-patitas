@@ -111,20 +111,6 @@
                 <input type="text" id="celularRegister" th:field="*{celular}" placeholder="Ingresa tu celular" required />
             </div>
 
-            <div th:each="rol : ${listaRoles}" class="form-check">
-                <input class="form-check-input" type="checkbox"
-                       th:field="*{roles}" th:value="${rol.id}"
-                       th:id="${'rol_' + rol.id}"/>
-
-                <label class="form-check-label" th:for="${'rol_' + rol.id}">
-        <span th:switch="${rol.name.name()}">
-            <span th:case="'ROLE_ADMIN'">Administrador</span>
-            <span th:case="'ROLE_VET'">Veterinaria</span>
-            <span th:case="'ROLE_PACIENTE'">Paciente</span>
-        </span>
-                </label>
-            </div>
-
             <button type="submit" class="btn">Registrarse</button>
         </form>
 
