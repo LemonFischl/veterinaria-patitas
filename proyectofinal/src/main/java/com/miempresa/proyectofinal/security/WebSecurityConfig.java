@@ -48,7 +48,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests(authz -> authz
                         // Recursos públicos
-                        .requestMatchers("/auth/**", "/css/**", "/js/**", "/img/**").permitAll()
+                        .requestMatchers("/auth/**", "/css/**", "/js/**", "/IMG/**").permitAll()
 
                         //Rutas para mascota
                         .requestMatchers("/paciente/mascota/nuevo", "/paciente/mascota/guardar").hasAnyRole("ADMIN", "PACIENTE", "VET")

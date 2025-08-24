@@ -14,7 +14,6 @@
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap5.min.css">
 
-    <!-- Estilos personalizados (normal y tabla) -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/tabla-style.css}">
 </head>
@@ -146,13 +145,13 @@
                     <li class="list-items"><a th:href="@{/}">Inicio</a></li>
                     <li class="list-items"><a th:href="@{/veterinarias}">Veterinarias</a></li>
                     <li class="list-items"><a th:href="@{/adopcion}">Adopción</a></li>
-                    <li class="list-items"><a href="@{/blog}">Blog</a></li>
+                    <li class="list-items"><a th:href="@{/blog}">Blog</a></li>
                     <li class="list-items"><a href="#">Política de privacidad</a></li>
                     <li class="list-items"><a href="https://consumidor.gob.pe/libro-de-reclamaciones/">Libro de reclamaciones</a></li>
                 </ul>
             </div>
 
-            <!-- Columna contacto -->
+
             <div class="col-md-3 mb-3 mt-3">
                 <ul class="footer-links list-unstyled">
                     <li class="list-items">
@@ -168,10 +167,8 @@
                 </ul>
             </div>
 
-            <!-- Separador -->
             <hr class="footer-separator">
 
-            <!-- Parte inferior -->
             <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-start text-black">
                 <p class="list-items mb-1 mb-md-0">&copy; 2025 Patitas al Rescate</p>
                 <p class="list-items">Desarrollado con <i class="fa-solid fa-heart"></i> por <strong>Heber</strong> y <strong>Sofía</strong></p>

@@ -5,123 +5,172 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Iniciar Sesión - Patitas Al Rescate</title>
 
-    <!-- Bootstrap y Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
-
-    <!-- Fuente Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <!-- Estilos personalizados -->
     <link rel="stylesheet" href="/css/login_styles.css" />
 </head>
 <body>
-<!-- Iconos flotantes de fondo -->
-<i class="bi bi-heart-pulse floating-icon icon-1"></i> <!-- Representa salud/veterinaria -->
-<i class="bi bi-shield-plus floating-icon icon-2"></i> <!-- Protección, seguro, bienestar animal -->
-<i class="bi bi-droplet-half floating-icon icon-3"></i> <!-- Agua/higiene -->
-<i class="bi bi-paw floating-icon icon-4"></i> <!-- Huella de mascota -->
-<i class="bi bi-bandaid floating-icon icon-5"></i> <!-- Cuidado, curación -->
-<i class="bi bi-house-heart floating-icon icon-6"></i> <!-- Refugio o adopción -->
+<div class="container-general">
 
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="login-card p-5">
-                <div class="text-center mb-4">
-                    <div class="mb-3"></div>
-                    <h1 class="h3 brand-logo fw-bold mb-2">Patitas al Rescate</h1>
-                    <p class="text-muted"></p>
-                </div>
+    <div class="container-imagen">
+        <img src="/IMG/login-veterinaria.png" alt="Imagen de Veterinaria" class="imagen-veterinaria">
+    </div>
 
-                <!-- Alertas -->
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.error}">
-                    <i class="bi bi-exclamation-triangle me-2"></i>
-                    <strong>Error:</strong> Usuario o contraseña incorrectos.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de error"></button>
-                </div>
-                <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${param.logout}">
-                    <i class="bi bi-check-circle me-2"></i>
-                    Has cerrado sesión correctamente.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
-                </div>
 
-                <!-- Formulario -->
-                <form method="post" th:action="@{/login}">
-                    <div class="mb-4">
-                        <label for="username" class="form-label fw-semibold">
-                            <i class="bi bi-person-circle text-primary me-2"></i>Usuario
-                        </label>
-                        <div class="input-group">
-                <span class="input-group-text bg-light border-end-0">
-                  <i class="bi bi-person text-muted"></i>
-                </span>
-                            <input type="text" class="form-control border-start-0 ps-0" id="username" name="username" placeholder="Ingresa tu usuario" required autofocus />
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="password" class="form-label fw-semibold">
-                            <i class="bi bi-shield-lock text-primary me-2"></i>Contraseña
-                        </label>
-                        <div class="input-group">
-                <span class="input-group-text bg-light border-end-0">
-                  <i class="bi bi-lock text-muted"></i>
-                </span>
-                            <input type="password" class="form-control border-start-0 ps-0" id="password" name="password" placeholder="Ingresa tu contraseña" required />
-                            <button class="btn btn-outline-secondary" type="button" id="togglePassword" title="Mostrar/ocultar contraseña">
-                                <i class="bi bi-eye" id="toggleIcon"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="true" id="remember-me" name="remember-me" />
-                            <label class="form-check-label" for="remember-me">
-                                <i class="bi bi-bookmark-heart me-1"></i> Recordar mi sesión
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="d-grid mb-4">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="bi bi-box-arrow-in-right me-2"></i> Iniciar Sesión
-                        </button>
-                    </div>
-                </form>
-
-                <!-- Enlaces adicionales -->
-                <div class="text-center">
-                    <div class="mb-3">
-                        <a href="/recuperar-password" class="text-decoration-none">
-                            <i class="bi bi-key me-1"></i> ¿Olvidaste tu contraseña?
-                        </a>
-                    </div>
-                    <div class="mb-3">
-                        <p class="mb-1 text-muted">¿No tienes cuenta?</p>
-                        <a href="/auth/nuevo" class="btn btn-outline-primary">
-                            <i class="bi bi-person-plus me-1"></i>Registrarse
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Información adicional -->
-            <div class="text-center mt-4">
-                <small class="text-white-50">
-                    <i class="bi bi-info-circle me-1"></i> © 2025 Patitas al Rescate.
-                </small>
-            </div>
+    <div class="container-form">
+        <div class="logo-form">
+            <img th:src="@{/IMG/logoPatitas.png}" alt="Logo de Patitas al Rescate">
         </div>
+
+        <div class="tabs">
+            <div class="indicator"></div>
+            <button class="tab active" id="signInTab">Iniciar Sesión</button>
+            <button class="tab" id="signUpTab">Registrarse</button>
+        </div>
+
+
+
+        <div class="alerta error" th:if="${param.error}">
+            <i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Usuario o contraseña incorrectos.
+        </div>
+        <div class="alerta exito" th:if="${param.logout}">
+            <i class="fa-solid fa-circle-check"></i> Has cerrado sesión correctamente.
+        </div>
+
+
+
+
+
+
+
+        <form id="signInForm" class="formulario" method="post" th:action="@{/login}">
+            <div class="form-group">
+                <label for="username"><i class="fa-solid fa-user"></i> Usuario</label>
+                <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required autofocus />
+            </div>
+
+            <div class="form-group">
+                <label for="password"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required />
+                    <button type="button" class="toggle-password" id="togglePassword" title="Mostrar/ocultar contraseña">
+                        <i class="fa-solid fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="remember">
+                <input type="checkbox" id="remember-me" name="remember-me" />
+                <label for="remember-me">Recordar mi sesión</label>
+            </div>
+
+            <button type="submit" class="btn">Ingresar</button>
+
+            <div class="extra-links">
+                <a href="#" class="forgot">¿Olvidaste tu contraseña?</a>
+            </div>
+        </form>
+
+
+
+
+
+        <form id="signUpForm" class="formulario hidden" method="post" th:action="@{/auth/guardar}" th:object="${usuarioRegister}">
+            <input type="hidden" th:field="*{id_usuario}"/>
+
+            <div class="form-group">
+                <label for="usernameRegister">Usuario</label>
+                <input type="text" id="usernameRegister" th:field="*{username}" placeholder="Crea tu usuario" required />
+            </div>
+
+            <div class="form-group">
+
+                <label for="passwordRegister">Contraseña</label>
+                <input type="password" id="passwordRegister" th:field="*{password}" placeholder="Crea una contraseña" required />
+                <span>mínimo 8 caracteres, con mayúscula, minúscula, número y carácter especial.</span>
+                <div class="aviso" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre completo:</label>
+                <input type="text" id="nombre" th:field="*{nombre}" required />
+                <span class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="emailRegister">Correo</label>
+                <input type="email" id="emailRegister" th:field="*{email}" placeholder="Ingresa tu correo" required />
+                <div class="aviso" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="celularRegister">Celular</label>
+                <input type="text" id="celularRegister" th:field="*{celular}" placeholder="Ingresa tu celular" required />
+            </div>
+
+            <div th:each="rol : ${listaRoles}" class="form-check">
+                <input class="form-check-input" type="checkbox"
+                       th:field="*{roles}" th:value="${rol.id}"
+                       th:id="${'rol_' + rol.id}"/>
+
+                <label class="form-check-label" th:for="${'rol_' + rol.id}">
+        <span th:switch="${rol.name.name()}">
+            <span th:case="'ROLE_ADMIN'">Administrador</span>
+            <span th:case="'ROLE_VET'">Veterinaria</span>
+            <span th:case="'ROLE_PACIENTE'">Paciente</span>
+        </span>
+                </label>
+            </div>
+
+            <button type="submit" class="btn">Registrarse</button>
+        </form>
+
     </div>
 </div>
 
-<!-- Bootstrap Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const signInTab = document.getElementById("signInTab");
+  const signUpTab = document.getElementById("signUpTab");
+  const signInForm = document.getElementById("signInForm");
+  const signUpForm = document.getElementById("signUpForm");
+  const tabsContainer = document.querySelector(".tabs");
 
-<!-- Script personalizado -->
-<script src="/js/login_scripts.js"></script>
+  // Acción al hacer clic en "Iniciar Sesión"
+  signInTab.addEventListener("click", () => {
+    tabsContainer.classList.remove("sign-up-active");
+    signInTab.classList.add("active");
+    signUpTab.classList.remove("active");
+    signInForm.classList.remove("hidden");
+    signUpForm.classList.add("hidden");
+  });
+
+  // Acción al hacer clic en "Registrarse"
+  signUpTab.addEventListener("click", () => {
+    tabsContainer.classList.add("sign-up-active");
+    signUpTab.classList.add("active");
+    signInTab.classList.remove("active");
+    signUpForm.classList.remove("hidden");
+    signInForm.classList.add("hidden");
+  });
+});
+
+
+document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const icon = document.getElementById('toggleIcon');
+            const isPassword = passwordField.type === 'password';
+
+            passwordField.type = isPassword ? 'text' : 'password';
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        });
+</script>
+
+
+
 </body>
 </html>

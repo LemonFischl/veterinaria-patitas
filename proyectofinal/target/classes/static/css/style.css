@@ -4,7 +4,7 @@ body {
 
 /* Barra de navegacion */
 .navbar {
-     background-color: #091C4F;
+     background-color: #622A91;
      color: white;
      padding:0;
  }
@@ -226,7 +226,7 @@ body {
 
 .social-icons i {
     font-size: 25px;
-    color: #091C4F;
+    color: #622A91;
     background-color: white;
     border-radius: 50%;
     width: 45px;
@@ -288,33 +288,33 @@ form.container {
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-
+}
 h3.mb-4 {
     text-align: center;
     color: #2c3e50;
     font-weight: bold;
-
+}
 .form-control {
     border-radius: 8px;
     border: 1px solid #ced4da;
     transition: border-color 0.3s, box-shadow 0.3s;
-
+}
 .form-control:focus {
     border-color: #28a745;
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-
+}
 .form-check-label {
     margin-left: 6px;
     color: #555;
-
+}
 .form-check-input:checked {
     background-color: #28a745;
     border-color: #28a745;
-
+}
 textarea.form-control {
     resize: vertical;
     border-radius: 8px;
-
+}
 .form-check-label {
     user-select: none;
 }
@@ -325,11 +325,11 @@ button.btn-success {
     font-weight: 500;
     border-radius: 50px;
     transition: all 0.3s ease-in-out;
-
+}
 button.btn-success:hover {
     background-color: #218838;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-
+}
 /* Responsive padding */
 @media (max-width: 768px) {
     form.container {

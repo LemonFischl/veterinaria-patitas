@@ -29,7 +29,7 @@ public class UsuarioAuthController {
         if (exito != null) {
             model.addAttribute("exito", exito);
         }
-        return "auth/usuario-register";
+        return "auth/login";
     }
 
     @PostMapping("/guardar")
@@ -39,7 +39,7 @@ public class UsuarioAuthController {
 
         if (result.hasErrors()) {
             model.addAttribute("listaRoles", roleService.listarRoles());
-            return "auth/usuario-register";
+            return "auth/login";
         }
 
         try {
@@ -47,20 +47,19 @@ public class UsuarioAuthController {
             if (usuario.getRoles() == null || usuario.getRoles().isEmpty()) {
                 model.addAttribute("listaRoles", roleService.listarRoles());
                 model.addAttribute("error", "Debe seleccionar al menos un rol");
-                return "auth/usuario-register";
+                return "auth/login";
             }
 
             // Guardar usuario
             usuarioService.guardarUsuario(usuario);
 
-            // Redirigir al formulario con mensaje de éxito (usando URLEncoder para caracteres especiales)
             String mensajeExito = "¡Usuario registrado exitosamente!";
-            return "redirect:/auth/nuevo?exito=" + java.net.URLEncoder.encode(mensajeExito, java.nio.charset.StandardCharsets.UTF_8);
+            return "redirect:/auth/login?exito=" + java.net.URLEncoder.encode(mensajeExito, java.nio.charset.StandardCharsets.UTF_8);
 
         } catch (Exception e) {
             model.addAttribute("listaRoles", roleService.listarRoles());
             model.addAttribute("error", "Error al registrar usuario: " + e.getMessage());
-            return "auth/usuario-register";
+            return "auth/login";
         }
     }
 }
