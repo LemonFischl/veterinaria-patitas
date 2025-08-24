@@ -24,7 +24,7 @@ public class UsuarioAuthController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/nuevo")
+    @GetMapping("/login")
     public String mostrarFormularioRegistro(@RequestParam(name = "exito", required = false) String exito,
                                             Model model) {
         Usuario usuario = new Usuario();

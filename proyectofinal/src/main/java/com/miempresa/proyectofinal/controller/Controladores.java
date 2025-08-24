@@ -16,6 +16,11 @@ public class Controladores {
     @Autowired
     private VeterinariaService veterinariaService;
 
+    @GetMapping("/")
+    public String mostrarIndex() {
+        return "index";
+    }
+
     @GetMapping("/veterinarias")
     public String mostrarVeterinarias(Model model) {
         List<Veterinaria> activas = veterinariaService.listarVeterinarias()
