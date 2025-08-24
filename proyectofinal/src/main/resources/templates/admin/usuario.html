@@ -48,7 +48,7 @@
                                 </label>
                                 <input type="text" class="form-control" id="username" th:field="*{username}" required>
                                 <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
-                                     class="text-danger"></div>
+                                     class="alert alert-danger small mt-1"></div>
                             </div>
 
                             <div class="col-md-6 mb-3">
@@ -58,7 +58,7 @@
                                 <input type="password" class="form-control" id="password" th:field="*{password}"
                                        required>
                                 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                                     class="text-danger"></div>
+                                     class="alert alert-danger small mt-1"></div>
                             </div>
                         </div>
 
@@ -67,7 +67,7 @@
                                 <i class="bi bi-person-badge me-1 text-primary"></i>Nombre Completo
                             </label>
                             <input type="text" class="form-control" id="nombre" th:field="*{nombre}">
-                            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></div>
+                            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger small mt-1"></div>
                         </div>
 
                         <div class="row">
@@ -77,7 +77,7 @@
                                 </label>
                                 <input type="email" class="form-control" id="email" th:field="*{email}" required>
                                 <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                                     class="alert alert-danger"></div>
+                                     class="alert alert-danger small mt-1"></div>
                             </div>
 
                             <div class="col-md-5 mb-3">
@@ -86,7 +86,7 @@
                                 </label>
                                 <input type="text" class="form-control" id="celular" th:field="*{celular}" required>
                                 <div th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}"
-                                     class="text-danger"></div>
+                                     class="alert alert-danger small mt-1"></div>
                             </div>
                         </div>
 
@@ -122,7 +122,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('roles')}"
+                            <div class="alert alert-danger small mt-1" th:if="${#fields.hasErrors('roles')}"
                                  th:errors="*{roles}"></div>
                         </div>
 

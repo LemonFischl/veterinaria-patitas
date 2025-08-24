@@ -1,6 +1,5 @@
 package com.miempresa.proyectofinal.model;
 
-import com.miempresa.proyectofinal.validator.UniqueEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,8 +12,7 @@ import java.util.Set;
 
 // Preparando para refactorizar
 @Entity
-@Table(name = "usuario") // NOMBRE DE TABLA ACTUALIZADO A 'usuario'
-@UniqueEmail // validador
+@Table(name = "usuario") // NOMBRE DE TABLA ACTUALIZADO A 'usuario
 public class Usuario implements UserDetails { // UserDetails para representar un usuario autenticado dentro de la aplicación
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +42,8 @@ public class Usuario implements UserDetails { // UserDetails para representar un
     @Column(nullable = false) // Agregado nullable = false
     private String email;
 
-    @Digits(integer = 9, fraction = 0, message = "El celular debe contener exactamente 9 dígitos")
+    @Size(min = 9, max = 9, message = "El celular debe contener exactamente 9 dígitos")
+    @Digits(integer = 9, fraction = 0, message = "El celular debe contener solo números")
     private String celular;
 
     // --- Relación con MASCOTAS

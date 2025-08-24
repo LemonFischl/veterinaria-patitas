@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Validated
@@ -32,16 +33,6 @@ public class UsuarioService {
             System.out.println("Username: " + usuario.getUsername());
             System.out.println("Email: " + usuario.getEmail());
             System.out.println("Roles: " + usuario.getRoles().size());
-
-            // Verificar si el email ya existe
-            if (usuario.getId_usuario() == null && existeEmail(usuario.getEmail())) {
-                throw new RuntimeException("El email ya está registrado");
-            }
-
-            // Verificar si el username ya existe
-            if (usuario.getId_usuario() == null && usuarioRegisterRepository.findByUsername(usuario.getUsername()).isPresent()) {
-                throw new RuntimeException("El nombre de usuario ya está registrado");
-            }
 
             // Codificar contraseña solo si es nueva o no está codificada
             if (usuario.getId_usuario() == null || !usuario.getPassword().startsWith("$2a$")) {
@@ -67,10 +58,17 @@ public class UsuarioService {
     public List<Usuario> listarUsuarios() {
         return usuarioRegisterRepository.findAll(); }
 
-    public boolean existeEmail(String email) {
-        return usuarioRegisterRepository.findByEmail(email).isPresent();
+    public boolean existeEmail(Usuario usuario) {
+        Optional<Usuario> existente = usuarioRegisterRepository.findByEmail(usuario.getEmail());
+        return existente.isPresent() &&
+                !existente.get().getId_usuario().equals(usuario.getId_usuario());
     }
 
+    public boolean existeUsername(Usuario usuario) {
+        Optional<Usuario> existente = usuarioRegisterRepository.findByUsername(usuario.getUsername());
+        return existente.isPresent() &&
+                !existente.get().getId_usuario().equals(usuario.getId_usuario());
+    }
     public void eliminarUsuario(Long id) {
         usuarioRegisterRepository.deleteById(id);
     }
