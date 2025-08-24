@@ -37,7 +37,17 @@ body {
 
 .container-form {
     width:30%;
-    padding: 20px;
+    padding: 50px;
+}
+
+@media (max-width: 1250px) {
+    .container-imagen {
+        display:none;
+    }
+    .container-form {
+    width:100%
+    }
+
 }
 
 .logo-form {
