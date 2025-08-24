@@ -1,5 +1,6 @@
 package com.miempresa.proyectofinal.controller;
 
+import com.miempresa.proyectofinal.model.Role;
 import com.miempresa.proyectofinal.model.Usuario;
 import com.miempresa.proyectofinal.service.RoleService;
 import com.miempresa.proyectofinal.service.UsuarioService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/auth")
 public class UsuarioAuthController {
+
     private final UsuarioService usuarioService;
     private final RoleService roleService;
 
@@ -23,9 +25,14 @@ public class UsuarioAuthController {
     }
 
     @GetMapping("/nuevo")
-    public String mostrarFormularioRegistro(@RequestParam(name = "exito", required = false) String exito, Model model) {
-        model.addAttribute("usuarioRegister", new Usuario());
+    public String mostrarFormularioRegistro(@RequestParam(name = "exito", required = false) String exito,
+                                            Model model) {
+        Usuario usuario = new Usuario();
+        model.addAttribute("usuarioRegister", usuario);
+
+        // Solo se pasa la lista completa de roles al template, para usar en checkbox si quieres
         model.addAttribute("listaRoles", roleService.listarRoles());
+
         if (exito != null) {
             model.addAttribute("exito", exito);
         }
@@ -37,30 +44,27 @@ public class UsuarioAuthController {
                                  BindingResult result,
                                  Model model) {
 
-        // VALIDACIONES
-        if (usuario.getRoles() == null || usuario.getRoles().isEmpty()) {
-            result.rejectValue("roles", "error.usuario", "Seleccione al menos un rol.");
-        }
-
-        if (usuarioService.existeUsername(usuario)) {
-            result.rejectValue("username", "error.usuario", "El nombre de usuario ya está ocupado.");
-        }
-
-        if (usuarioService.existeEmail(usuario)) {
-            result.rejectValue("email", "error.usuario", "El correo electrónico ya está registrado.");
-        }
-
+        // Validar errores del formulario
         if (result.hasErrors()) {
             model.addAttribute("listaRoles", roleService.listarRoles());
             return "auth/login";
         }
 
         try {
-            // Guardar usuario
+            if (usuario.getRoles() == null || usuario.getRoles().isEmpty()) {
+                for (Role r : roleService.listarRoles()) {
+                    if ("ROLE_PACIENTE".equals(r.getName().name())) {
+                        usuario.getRoles().add(r);
+                        break;
+                    }
+                }
+            }
+
             usuarioService.guardarUsuario(usuario);
 
             String mensajeExito = "¡Usuario registrado exitosamente!";
-            return "redirect:/auth/login?exito=" + java.net.URLEncoder.encode(mensajeExito, java.nio.charset.StandardCharsets.UTF_8);
+            return "redirect:/auth/login?exito=" + java.net.URLEncoder.encode(
+                    mensajeExito, java.nio.charset.StandardCharsets.UTF_8);
 
         } catch (Exception e) {
             model.addAttribute("listaRoles", roleService.listarRoles());
