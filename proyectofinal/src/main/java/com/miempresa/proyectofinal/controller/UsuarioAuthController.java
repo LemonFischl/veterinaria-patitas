@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/auth")
 public class UsuarioAuthController {
-
     private final UsuarioService usuarioService;
     private final RoleService roleService;
 
@@ -24,14 +23,13 @@ public class UsuarioAuthController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/nuevo")
+    @GetMapping("/login")
     public String mostrarFormularioRegistro(@RequestParam(name = "exito", required = false) String exito,
                                             Model model) {
         Usuario usuario = new Usuario();
         model.addAttribute("usuarioRegister", usuario);
 
         model.addAttribute("listaRoles", roleService.listarRoles());
-
         if (exito != null) {
             model.addAttribute("exito", exito);
         }
@@ -43,7 +41,15 @@ public class UsuarioAuthController {
                                  BindingResult result,
                                  Model model) {
 
-        // Validar errores del formulario
+        // VALIDACIONES
+        if (usuarioService.existeUsername(usuario)) {
+            result.rejectValue("username", "error.usuario", "El nombre de usuario ya está en uso.");
+        }
+
+        if (usuarioService.existeEmail(usuario)) {
+            result.rejectValue("email", "error.usuario", "El correo electrónico ya está registrado.");
+        }
+
         if (result.hasErrors()) {
             model.addAttribute("listaRoles", roleService.listarRoles());
             return "auth/login";

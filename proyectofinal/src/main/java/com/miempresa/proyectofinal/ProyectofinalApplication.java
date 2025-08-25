@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
-@EnableScheduling //Habilitando para que el estado funcione automaticamente
+@EnableScheduling //Habilitando para que el estado funcione automáticamente
 public class ProyectofinalApplication {
 
 	public static void main(String[] args) {
