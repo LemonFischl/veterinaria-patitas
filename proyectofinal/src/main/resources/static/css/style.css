@@ -4,20 +4,20 @@ body {
 
 /* Barra de navegacion */
 .navbar {
-     background-color: #622A91;
-     color: white;
+     background-color: ##F5F5F5;
+     color: #622A91;
      padding:0;
  }
 
  .navbar-brand,
  .navbar-nav .nav-link,
  .navbar-nav {
-     color: white;
+     color: #622A91;
  }
 
  .dropdown-toggle,
  .nav-link {
-     color: white;
+     color: #622A91 !important;
      transition: color 0.2s ease;
  }
 
@@ -54,7 +54,7 @@ body {
      gap: 1rem;
      font-family: "Roboto", sans-serif;
      font-weight:800;
-     color:white;
+     color: #622A91;
 }
 
 /* Carrusel */

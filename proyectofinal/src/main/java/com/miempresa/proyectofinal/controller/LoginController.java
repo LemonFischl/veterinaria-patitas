@@ -26,7 +26,7 @@ public class LoginController {
         if (exito != null) {
             model.addAttribute("exito", exito);
         }
-        return "auth/login"; // login.html con tabs de login/registro
+        return "auth/login";
     }
 
     @GetMapping("/")

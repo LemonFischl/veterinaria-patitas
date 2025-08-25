@@ -30,7 +30,6 @@ public class UsuarioAuthController {
         Usuario usuario = new Usuario();
         model.addAttribute("usuarioRegister", usuario);
 
-        // Solo se pasa la lista completa de roles al template, para usar en checkbox si quieres
         model.addAttribute("listaRoles", roleService.listarRoles());
 
         if (exito != null) {
