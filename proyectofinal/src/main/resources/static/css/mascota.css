@@ -273,3 +273,112 @@ background-color: #622A91;
     }
 }
 
+/* Contenedor general */
+.table-container {
+    flex: 1;
+    padding: 10px;
+}
+
+/* Tarjeta de tabla */
+.table-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+
+.card-header-custom h4 {
+    margin: 0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Tabla */
+.table-wrapper {
+    padding: 15px;
+    overflow-x: auto;
+}
+
+.tablaData {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.tablaData thead {
+    background: #f8f9fa;
+}
+
+.tablaData th,
+.tablaData td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.tablaData tbody tr:hover {
+    background: #f1f1f1;
+}
+
+/* Celdas truncadas */
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Roles */
+.roles-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Colores de roles */
+.badge-admin {
+    background-color: #dc3545; /* rojo */
+}
+
+.badge-vet {
+    background-color: #ffc107; /* amarillo */
+    color: #212529;
+}
+
+.badge-paciente {
+    background-color: #17a2b8; /* celeste */
+}
+
+/* Botones de acción */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+

@@ -13,200 +13,175 @@
 <!--Cabecera-->
 <div th:replace="~{fragmentos :: Cabecera}"></div>
 
-<div class="container-fluid mt-4 mb-5 px-4">
-    <div class="row g-4">
-        <!-- FORMULARIO DE REGISTRO -->
-        <div class="col-lg-5 col-md-6">
-            <div class="form-card">
-                <div class="card-header-custom">
-                    <h4 class="mb-0">
-                        <i class="bi bi-person-plus me-2"></i>Registrar Usuario
-                    </h4>
-                </div>
-                <div class="p-4">
-                    <form method="post" th:action="@{/admin/usuario/guardar}" th:object="${usuario}"
-                          class="compact-form">
-                        <!-- Mensaje de éxito -->
-                        <div th:if="${exito}" class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="bi bi-check-circle-fill me-2"></i>
-                            <span th:text="${exito}"></span>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="main-container">
+    <!-- FORMULARIO DE REGISTRO -->
+    <div class="form-container">
+        <div class="form-card">
+            <div class="card-header">
+                <h4><i class="bi bi-person-plus"></i> Registrar Usuario</h4>
+            </div>
+            <div class="form-body">
+                <form method="post" th:action="@{/admin/usuario/guardar}" th:object="${usuario}">
+
+                    <!-- Mensaje de éxito -->
+                    <div th:if="${exito}" class="alert-success">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span th:text="${exito}"></span>
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+
+                    <!-- Mensaje de error -->
+                    <div th:if="${error}" class="alert-danger">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span th:text="${error}"></span>
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+
+                    <input type="hidden" th:field="*{id_usuario}"/>
+
+                    <!-- Información básica -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="username"><i class="bi bi-person"></i> Username</label>
+                            <input type="text" id="username" th:field="*{username}" required>
+                            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
                         </div>
 
-                        <!-- Mensaje de error -->
-                        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            <span th:text="${error}"></span>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <div class="form-group">
+                            <label for="password"><i class="bi bi-lock"></i> Password</label>
+                            <input type="password" id="password" th:field="*{password}" required>
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
                         </div>
-                        <input type="hidden" th:field="*{id_usuario}"/>
-                        <!-- Información básica -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="username" class="form-label">
-                                    <i class="bi bi-person me-1 text-primary"></i>Username
-                                </label>
-                                <input type="text" class="form-control" id="username" th:field="*{username}" required>
-                                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
-                                     class="alert alert-danger small mt-1"></div>
-                            </div>
+                    </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label for="password" class="form-label">
-                                    <i class="bi bi-lock me-1 text-primary"></i>Password
-                                </label>
-                                <input type="password" class="form-control" id="password" th:field="*{password}"
-                                       required>
-                                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                                     class="alert alert-danger small mt-1"></div>
-                            </div>
+                    <div class="form-group">
+                        <label for="nombre"><i class="bi bi-person-badge"></i> Nombre Completo</label>
+                        <input type="text" id="nombre" th:field="*{nombre}">
+                        <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error"></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email"><i class="bi bi-envelope"></i> Correo Electrónico</label>
+                            <input type="email" id="email" th:field="*{email}" required>
+                            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">
-                                <i class="bi bi-person-badge me-1 text-primary"></i>Nombre Completo
-                            </label>
-                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}">
-                            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="alert alert-danger small mt-1"></div>
+                        <div class="form-group">
+                            <label for="celular"><i class="bi bi-phone"></i> Celular</label>
+                            <input type="text" id="celular" th:field="*{celular}" required>
+                            <div th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}" class="error"></div>
                         </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md-7 mb-3">
-                                <label for="email" class="form-label">
-                                    <i class="bi bi-envelope me-1 text-primary"></i>Correo Electrónico
-                                </label>
-                                <input type="email" class="form-control" id="email" th:field="*{email}" required>
-                                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                                     class="alert alert-danger small mt-1"></div>
-                            </div>
+                    <!-- Selección de roles -->
+                    <div class="form-group">
+                        <label><i class="bi bi-person-gear"></i> Asignar Roles</label>
 
-                            <div class="col-md-5 mb-3">
-                                <label for="celular" class="form-label">
-                                    <i class="bi bi-phone me-1 text-primary"></i>Celular
-                                </label>
-                                <input type="text" class="form-control" id="celular" th:field="*{celular}" required>
-                                <div th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}"
-                                     class="alert alert-danger small mt-1"></div>
-                            </div>
-                        </div>
+                        <div class="roles-box">
+                            <div th:each="rol : ${listaRoles}" class="role-item">
+                                <input type="checkbox"
+                                       th:field="*{roles}"
+                                       th:value="${rol.id}"
+                                       th:id="${'rol_' + rol.id}"/>
 
-                        <!-- Selección de roles -->
-                        <div class="mb-4">
-                            <label class="form-label">
-                                <i class="bi bi-person-gear me-1 text-primary"></i>Asignar Roles
-                            </label>
-
-                            <div class="border rounded p-3" style="background-color: #f8f9fa;">
-                                <div th:each="rol : ${listaRoles}" class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           th:field="*{roles}"
-                                           th:value="${rol.id}"
-                                           th:id="${'rol_' + rol.id}"/>
-
-                                    <label class="form-check-label" th:for="${'rol_' + rol.id}">
-                                        <span th:switch="${rol.name.name()}">
-                                            <span th:case="'ROLE_ADMIN'">
-                                                <i class="bi bi-shield-lock me-2 text-danger"></i>Administrador
-                                            </span>
-                                            <span th:case="'ROLE_VET'">
-                                                <i class="bi bi-heart-pulse me-2 text-warning"></i>Veterinaria
-                                            </span>
-                                            <span th:case="'ROLE_PACIENTE'">
-                                                <i class="bi bi-person-circle me-2 text-info"></i>Paciente
-                                            </span>
-                                            <span th:case="*">
-                                                <i class="bi bi-person me-1"></i>Otro
-                                            </span>
+                                <label th:for="${'rol_' + rol.id}">
+                                    <span th:switch="${rol.name.name()}">
+                                        <span th:case="'ROLE_ADMIN'">
+                                            <i class="bi bi-shield-lock"></i> Administrador
                                         </span>
-                                    </label>
-                                </div>
+                                        <span th:case="'ROLE_VET'">
+                                            <i class="bi bi-heart-pulse"></i> Veterinaria
+                                        </span>
+                                        <span th:case="'ROLE_PACIENTE'">
+                                            <i class="bi bi-person-circle"></i> Paciente
+                                        </span>
+                                        <span th:case="*">
+                                            <i class="bi bi-person"></i> Otro
+                                        </span>
+                                    </span>
+                                </label>
                             </div>
-                            <div class="alert alert-danger small mt-1" th:if="${#fields.hasErrors('roles')}"
-                                 th:errors="*{roles}"></div>
                         </div>
+                        <div class="error" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></div>
+                    </div>
 
+                    <!-- Botones de acción -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="bi bi-check-circle"></i> Guardar Usuario
+                        </button>
+                        <a href="/admin/usuario/nuevo" class="btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancelar
+                        </a>
+                    </div>
 
-                        <!-- Botones de acción -->
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                            <button type="submit" class="btn btn-success px-4">
-                                <i class="bi bi-check-circle me-2"></i>Guardar Usuario
-                            </button>
-                            <a href="/admin/usuario/nuevo" class="btn btn-outline-secondary px-4">
-                                <i class="bi bi-x-circle me-2"></i>Cancelar
-                            </a>
-                        </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
+    </div>
 
         <!-- TABLA DE USUARIOS -->
-        <div class="col-lg-7 col-md-6">
-            <div class="table-card">
-                <div class="card-header-custom justify-content-between align-items-center">
-                    <h4 class="mb-0"><i class="bi bi-people me-2"></i>Lista de Usuarios Registrados</h4>
-                </div>
-                <div class="table-responsive px-3 pb-3 pe-4">
-                    <table class="tablaData table table-compact table-hover mb-0">
-                        <thead>
-                        <tr class="text-center">
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Celular</th>
-                            <th>Roles</th>
-                            <th>Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="u : ${usuarios}" class="align-middle usuario-row">
-                            <td class="text-center fw-bold" th:text="${u.id_usuario}"></td>
-                            <td th:text="${u.username}" class="text-truncate username-cell"
-                                style="max-width: 120px;"></td>
-                            <td th:text="${u.nombre}" class="text-truncate nombre-cell" style="max-width: 150px;"></td>
-                            <td th:text="${u.email}" class="text-truncate email-cell" style="max-width: 180px;"></td>
-                            <td th:text="${u.celular}" class="celular-cell"></td>
-                            <td class="roles-cell">
-                                <div class="d-flex flex-wrap gap-1">
-                                    <span th:each="r : ${u.roles}"
-                                          th:text="${#strings.replace(r.name, 'ROLE_', '')}"
-                                          class="badge badge-compact role-badge"
-                                          th:classappend="${#strings.contains(r.name, 'ADMIN')} ? 'bg-danger' :
-                                                         (${#strings.contains(r.name, 'VET')} ? 'bg-warning text-dark' : 'bg-info')"
-                                          th:attr="data-role=${#strings.replace(r.name, 'ROLE_', '')}">
-                                    </span>
-                                </div>
-                            </td>
-                            <td class="text-center action-buttons">
-                                <a th:href="@{/admin/usuario/editar(id=${u.id_usuario})}"
-                                   class="btn btn-sm btn-outline-primary btn-action" title="Editar usuario"
-                                   data-bs-toggle="tooltip">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a th:href="@{/admin/usuario/eliminar(id=${u.id_usuario})}"
-                                   class="btn btn-sm btn-outline-danger btn-action"
-                                   title="Eliminar usuario"
-                                   data-bs-toggle="tooltip"
-                                   onclick="return confirm('¿Está seguro que desea eliminar este usuario?\n\nEsta acción no se puede deshacer.')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <div class="table-container">
+        <div class="table-card">
+            <div class="card-header">
+                <h4><i class="bi bi-people"></i> Lista de Usuarios Registrados</h4>
+            </div>
+            <div class="table-wrapper">
+                <table class="tablaData">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Celular</th>
+                        <th>Roles</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="u : ${usuarios}" class="usuario-row">
+                        <td class="id-cell" th:text="${u.id_usuario}"></td>
+                        <td class="username-cell text-truncate" th:text="${u.username}"></td>
+                        <td class="nombre-cell text-truncate" th:text="${u.nombre}"></td>
+                        <td class="email-cell text-truncate" th:text="${u.email}"></td>
+                        <td class="celular-cell" th:text="${u.celular}"></td>
+                        <td class="roles-cell">
+                            <div class="roles-wrapper">
+                            <span th:each="r : ${u.roles}"
+                                  th:text="${#strings.replace(r.name, 'ROLE_', '')}"
+                                  class="role-badge"
+                                  th:classappend="${#strings.contains(r.name, 'ADMIN')} ? 'badge-admin' :
+                                                  (${#strings.contains(r.name, 'VET')} ? 'badge-vet' : 'badge-paciente')"
+                                  th:attr="data-role=${#strings.replace(r.name, 'ROLE_', '')}">
+                            </span>
+                            </div>
+                        </td>
+                        <td class="action-buttons">
+                            <a th:href="@{/admin/usuario/editar(id=${u.id_usuario})}"
+                               class="btn-action btn-edit"
+                               title="Editar usuario">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a th:href="@{/admin/usuario/eliminar(id=${u.id_usuario})}"
+                               class="btn-action btn-delete"
+                               title="Eliminar usuario"
+                               onclick="return confirm('¿Está seguro que desea eliminar este usuario?\n\nEsta acción no se puede deshacer.')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+    <!--Footer-->
+    <footer class="footer mt-auto mt-2 text-white" th:insert="~{fragmentos :: Pie}"></footer>
 
-<!--Footer-->
-<footer class="footer mt-auto mt-2 text-white" th:insert="~{fragmentos :: Pie}">
-</footer>
-
-<!-- Librerías de js-->
-<th:block th:insert="~{fragmentos :: Links-js}"/>
+    <!-- Librerías de js-->
+    <th:block th:insert="~{fragmentos :: Links-js}"/>
 </body>
 </html>
