@@ -1,6 +1,5 @@
 package com.miempresa.proyectofinal.model;
-import com.miempresa.proyectofinal.validator.DiaAtencionValido;
-import com.miempresa.proyectofinal.validator.HoraDentroDeHorario;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;

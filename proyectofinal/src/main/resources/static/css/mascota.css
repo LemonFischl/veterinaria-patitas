@@ -273,12 +273,9 @@ background-color: #622A91;
     }
 }
 
-/* Contenedor general */
-.table-container {
-    flex: 1;
-    padding: 10px;
-}
 
+
+/*DISEÑO DE GESTION: REGISTRAR USUARIO*/
 /* Tarjeta de tabla */
 .table-card {
     background: #fff;
