@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password"><i class="bi bi-lock"></i> Password</label>
+                            <label for="password"><i class="bi bi-lock"></i> Contraseña</label>
                             <input type="password" id="password" th:field="*{password}" required>
                             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
                         </div>
@@ -91,7 +91,7 @@
                                             <i class="bi bi-shield-lock"></i> Administrador
                                         </span>
                                         <span th:case="'ROLE_VET'">
-                                            <i class="bi bi-heart-pulse"></i> Veterinaria
+                                            <i class="bi bi-heart-pulse"></i> Veterinario
                                         </span>
                                         <span th:case="'ROLE_PACIENTE'">
                                             <i class="bi bi-person-circle"></i> Paciente

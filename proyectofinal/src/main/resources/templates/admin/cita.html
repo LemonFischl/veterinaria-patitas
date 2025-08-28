@@ -10,273 +10,220 @@
 <!-- Cabecera -->
 <div th:replace="~{fragmentos :: Cabecera}"></div>
 
-<div class="container-fluid mt-4 mb-5 px-4">
-    <div class="row g-4">
-        <!-- FORMULARIO DE REGISTRO-->
-        <div class="col-lg-5 col-md-6">
+<div class="main-container">
+        <!-- FORMULARIO DE REGISTRO DE CITA -->
+        <div class="form-container">
             <div class="form-card">
-                <div class="card-header-custom">
-                    <h4 class="mb-0">
-                        <i class="bi bi-calendar-plus me-2"></i>Registrar Cita
-                    </h4>
-                </div>
-                <div class="p-4">
-                    <form method="post" th:action="@{/admin/cita/guardar}" th:object="${cita}" class="compact-form">
-                        <!-- Mensaje de éxito -->
-                        <div th:if="${exito}" class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="bi bi-check-circle-fill me-2"></i>
-                            <span th:text="${exito}"></span>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="card-header">
+                <h4><i class="bi bi-calendar-plus"></i> Registrar Cita</h4>
+            </div>
+            <div class="form-body">
+                <form method="post" th:action="@{/admin/cita/guardar}" th:object="${cita}">
+
+                    <!-- Mensaje de éxito -->
+                    <div th:if="${exito}" class="alert alert-success">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span th:text="${exito}"></span>
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+
+                    <!-- Mensaje de error -->
+                    <div th:if="${error}" class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span th:text="${error}"></span>
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+
+                    <input type="hidden" th:field="*{id_cita}"/>
+                    <input type="hidden" th:field="*{version}"/>
+
+                    <!-- Usuario -->
+                    <input type="hidden" th:name="usuario.id_usuario"
+                           th:value="${cita.usuario != null ? cita.usuario.id_usuario : null}"
+                           sec:authorize="hasRole('PACIENTE')"/>
+
+                    <div class="form-row" sec:authorize="hasAnyRole('ADMIN','VET')">
+                        <div class="form-group">
+                            <label><i class="bi bi-person-badge"></i> Paciente</label>
+                            <select id="usuarioSelect" th:field="*{usuario.id_usuario}" required>
+                                <option value="" disabled selected>Seleccione paciente</option>
+                                <option th:each="u : ${usuarios}" th:value="${u.id_usuario}" th:text="${u.nombre}"></option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}" class="error"></div>
+                            <div th:if="${#fields.hasErrors('usuario.id_usuario')}" th:errors="*{usuario.id_usuario}" class="error"></div>
                         </div>
 
-                        <!-- Mensaje de error -->
-                        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            <span th:text="${error}"></span>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-
-                        <input type="hidden" th:field="*{id_cita}"/>
-                        <input type="hidden" th:field="*{version}"/>
-
-                        <!-- Usuario -->
-                        <!-- PACIENTE solo ve su ID oculto -->
-                        <input type="hidden" th:name="usuario.id_usuario"
-                               th:value="${cita.usuario != null ? cita.usuario.id_usuario : null}"
-                               sec:authorize="hasRole('PACIENTE')"/>
-
-                        <!-- ADMIN o VETERINARIA puede elegir usuario -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3" sec:authorize="hasAnyRole('ADMIN', 'VET')">
-                                <label class="form-label"><i
-                                        class="bi bi-person-circle me-2 text-primary"></i>Usuario</label>
-                                <select id="usuarioSelect" th:field="*{usuario.id_usuario}" class="form-select"
-                                        required>
-                                    <option value="" disabled selected>Seleccione usuario</option>
-                                    <option th:each="u : ${usuarios}" th:value="${u.id_usuario}"
-                                            th:text="${u.nombre}"></option>
-                                </select>
-                                <div th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}"
-                                     class="text-danger"></div>
-                                <div th:if="${#fields.hasErrors('usuario.id_usuario')}"
-                                     th:errors="*{usuario.id_usuario}"
-                                     class="text-danger"></div>
-                            </div>
-
-                            <!-- Mascotas -->
-                            <div th:class="${#authorization.expression('hasAnyRole(''ADMIN'', ''VET'')') ? 'col-md-6 mb-3' : 'mb-3'}">
-                                <label for="mascotaSelect" class="form-label"><i
-                                        class="fa-solid fa-paw me-2 text-primary"></i>Mascota</label>
-                                <select id="mascotaSelect" th:field="*{mascota.id_mascota}" class="form-select"
-                                        required>
-                                    <option value="" disabled selected data-usuario-id="">Seleccione mascota</option>
-                                    <th:block th:if="${mascotas != null}">
-                                        <th:block th:each="m : ${mascotas}">
-                                            <option th:value="${m.id_mascota}"
-                                                    th:text="${m.nombre}"
-                                                    th:attr="data-usuario-id=${m.usuario.id_usuario}">
-                                            </option>
-                                        </th:block>
-                                    </th:block>
-                                </select>
-                                <div th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}"
-                                     class="text-danger"></div>
-                                <div th:if="${#fields.hasErrors('mascota.id_mascota')}"
-                                     th:errors="*{mascota.id_mascota}"
-                                     class="text-danger"></div>
-                            </div>
-                        </div>
-
-                        <!-- Veterinaria -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="veterinaria" class="form-label"><i
-                                        class="bi bi-hospital me-2 text-primary"></i>Veterinaria</label>
-                                <select id="veterinaria" th:field="*{veterinaria.id_vet}" class="form-select" required>
-                                    <option th:value="'0'" th:text="'Seleccione una veterinaria'"
-                                            th:if="${#fields.hasErrors('veterinaria') or #fields.hasErrors('veterinaria.id_vet')}"
-                                            selected>
-                                    </option>
-                                    <option th:each="v : ${veterinarias}"
-                                            th:value="${v.id_vet}"
-                                            th:text="${v.nombre}"
-                                            th:data-servicios="${v.serviciosGenerales}">
-                                    </option>
-                                </select>
-                                <div th:if="${#fields.hasErrors('veterinaria')}" th:errors="*{veterinaria}"
-                                     class="text-danger"></div>
-                                <div th:if="${#fields.hasErrors('veterinaria.id_vet')}"
-                                     th:errors="*{veterinaria.id_vet}"
-                                     class="text-danger"></div>
-                            </div>
-
-                            <!-- Veterinario -->
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label"><i class="bi bi-person-badge me-2 text-primary"></i>Veterinario</label>
-                                <select id="veterinarioSelect" th:field="*{veterinario.id_veterinario}"
-                                        class="form-select">
-                                    <option value="">Sin asignar</option>
-                                    <option th:each="vet : ${veterinarios}"
-                                            th:value="${vet.id_veterinario}"
-                                            th:text="${vet.nombre}"
-                                            th:data-vet-vet="${vet.veterinaria.id_vet}">
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- Servicios ofrecidos -->
-                        <div class="mb-3">
-                            <label class="form-label"><i class="bi bi-briefcase me-2 text-primary"></i>Servicios
-                                disponibles</label>
-                            <ul id="serviciosVeterinaria" class="list-group"></ul>
-                        </div>
-
-                        <!-- Fecha y hora -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label"><i class="bi bi-calendar me-2 text-primary"></i>Fecha</label>
-                                <input type="date" th:field="*{fecha}" class="form-control" required/>
-                                <div th:if="${#fields.hasErrors('hora')}" th:errors="*{hora}" class="text-danger"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label"><i class="bi bi-clock me-2 text-primary"></i>Hora</label>
-                                <input type="time" th:field="*{hora}" class="form-control" required/>
-                                <div th:if="${#fields.hasErrors('hora')}" th:errors="*{hora}" class="text-danger"></div>
-                            </div>
-                        </div>
-                        <!-- Comentarios opcionales -->
-                        <div class="mb-3">
-                            <label class="form-label"><i class="bi bi-chat-left-text me-2 text-primary"></i>Comentarios
-                                (opcional)</label>
-                            <textarea th:field="*{comentarios}" class="form-control" rows="3"></textarea>
-                        </div>
-
-                        <!-- Estado -->
-                        <div class="mb-3" sec:authorize="!hasRole('PACIENTE')">
-                            <label for="estado" class="form-label"><i class="bi bi-info-circle me-2 text-primary"></i>Estado
-                                de la Cita</label>
-                            <select id="estado" class="form-select" th:field="*{estado}">
-                                <option value="" disabled>Seleccione un estado</option>
-                                <option th:each="estado : ${estados}"
-                                        th:value="${estado}"
-                                        th:text="${estado}">
+                        <!-- Mascotas -->
+                        <div class="form-group">
+                            <label for="mascotaSelect"><i class="fa-solid fa-paw"></i> Mascota</label>
+                            <select id="mascotaSelect" th:field="*{mascota.id_mascota}" required>
+                                <option value="" disabled selected>Seleccione mascota</option>
+                                <option th:each="m : ${mascotas}"
+                                        th:value="${m.id_mascota}"
+                                        th:text="${m.nombre}"
+                                        th:attr="data-usuario-id=${m.usuario.id_usuario}">
                                 </option>
                             </select>
-                            <div th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}" class="text-danger"></div>
+                            <div th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}" class="error"></div>
+                        </div>
+                    </div>
+
+                    <!-- Veterinaria y veterinario -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="veterinaria"><i class="fa-regular fa-hospital"></i> Veterinaria</label>
+                            <select id="veterinaria" th:field="*{veterinaria.id_vet}" required>
+                                <option value="" disabled selected>Seleccione una veterinaria</option>
+                                <option th:each="v : ${veterinarias}" th:value="${v.id_vet}" th:text="${v.nombre}" th:data-servicios="${v.serviciosGenerales}"></option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('veterinaria')}" th:errors="*{veterinaria}" class="error"></div>
                         </div>
 
-                        <!-- Historial del veterinario: solo si se edita Y no está cancelada ni no asistió -->
-                        <div class="mb-3"
-                             th:if="*{id_cita} != null and *{estado.name()} != 'CANCELADA' and *{estado.name()} != 'NO_ASISTIO'">
-                            <label class="form-label"><i class="bi bi-file-medical me-2 text-primary"></i>Historial del
-                                Veterinario</label>
-                            <textarea th:field="*{historialVeterinario}" class="form-control" rows="4"
-                                      placeholder="Notas del veterinario sobre la cita..."></textarea>
-                            <div th:if="${#fields.hasErrors('historialVeterinario')}"
-                                 th:errors="*{historialVeterinario}" class="text-danger"></div>
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-user-doctor"></i> Veterinario</label>
+                            <select id="veterinarioSelect" th:field="*{veterinario.id_veterinario}">
+                                <option value="">Sin asignar</option>
+                                <option th:each="vet : ${veterinarios}" th:value="${vet.id_veterinario}" th:text="${vet.nombre}"></option>
+                            </select>
                         </div>
+                    </div>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                            <button type="submit" class="btn btn-success px-4">
-                                <i class="bi bi-check-circle me-2"></i>Guardar
-                            </button>
-                            <a href="/admin/cita/nuevo" class="btn btn-outline-secondary px-4">
-                                <i class="bi bi-x-circle me-2"></i>Cancelar</a>
+                    <!-- Servicios -->
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-briefcase"></i> Servicios disponibles</label>
+                        <ul id="serviciosVeterinaria" class="list"></ul>
+                    </div>
+
+                    <!-- Fecha y Hora -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fa-regular fa-calendar-days"></i> Fecha</label>
+                            <input type="date" th:field="*{fecha}" required>
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group">
+                            <label><i class="fa-regular fa-clock"></i> Hora</label>
+                            <input type="time" th:field="*{hora}" required>
+                        </div>
+                    </div>
+
+                    <!-- Comentarios -->
+                    <div class="form-group">
+                        <label><i class="fa-regular fa-message"></i> Comentarios</label>
+                        <textarea th:field="*{comentarios}" rows="3"></textarea>
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="form-group" sec:authorize="!hasRole('PACIENTE')">
+                        <label for="estado"><i class="fa-regular fa-circle-question"></i> Estado de la Cita</label>
+                        <select id="estado" th:field="*{estado}">
+                            <option value="" disabled selected>Seleccione un estado</option>
+                            <option th:each="estado : ${estados}" th:value="${estado}" th:text="${estado}"></option>
+                        </select>
+                    </div>
+
+                    <!-- Historial -->
+                    <div class="form-group"
+                         th:if="*{id_cita} != null and *{estado.name()} != 'CANCELADA' and *{estado.name()} != 'NO_ASISTIO'">
+                        <label><i class="bi bi-file-medical text-primary"></i> Historial del Veterinario</label>
+                        <textarea th:field="*{historialVeterinario}" rows="4"></textarea>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary"><i class="bi bi-check-circle"></i> Guardar</button>
+                        <a href="/admin/cita/nuevo" class="btn-secondary"><i class="bi bi-x-circle"></i> Cancelar</a>
+                    </div>
+
+                </form>
             </div>
         </div>
+        </div>
 
-        <!-- TABLA DE CITAS -->
-        <div class="col-lg-7 col-md-6">
-            <div class="table-card">
-                <div class="card-header-custom justify-content-between align-items-center">
-                    <h4 class="mb-0"><i class="bi bi-calendar-check me-2"></i>Lista de Citas</h4>
-                </div>
-                <div class="table-responsive px-3 pb-3 pe-4">
-                    <table class="tablaData table table-compact table-hover mb-0">
-                        <thead>
-                        <tr class="text-center">
-                            <th>ID</th>
-                            <th>Usuario</th>
-                            <th>Mascota</th>
-                            <th>Veterinaria</th>
-                            <th>Veterinario</th>
-                            <th class="text-start">Fecha</th>
-                            <th>Hora</th>
-                            <th>Comentarios</th>
-                            <th>Estado</th>
-                            <th>Hist. del Vet.</th>
-                            <th>Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="c : ${citas}" class="align-middle usuario-row">
-                            <td th:text="${c.id_cita}"></td>
-                            <td th:text="${c.usuario.nombre}" class="text-truncate username-cell"
-                                style="max-width: 120px;"></td>
-                            <td th:text="${c.mascota.nombre}" class="text-truncate nombre-cell"
-                                style="max-width: 150px;"></td>
-                            <td th:text="${c.veterinaria.nombre}" class="text-truncate nombre-cell"
-                                style="max-width: 150px;"></td>
-                            <td th:text="${c.veterinario != null ? c.veterinario.nombre : 'Sin asignar'}"
-                                class="text-truncate nombre-cell" style="max-width: 150px;"></td>
-                            <td th:text="${#temporals.format(c.fecha, 'dd/MM/yyyy')}"
-                                th:attr="data-order=${#temporals.format(c.fecha, 'yyyy-MM-dd')}"
-                                class="text-center"></td>
-                            <td th:text="${c.hora}" class="text-center"></td>
-                            <td th:text="${c.comentarios}" class="text-truncate email-cell"
-                                style="max-width: 180px;"></td>
-                            <td class="text-center align-middle">
-                                <span th:text="${c.estado}" th:class="'badge ' + ${c.estadoCssClass}"> </span>
-                            </td>
-                            <td>
-                                <span th:if="${c.historialVeterinario != null and c.historialVeterinario != ''}"><i
-                                        class="bi bi-check-circle-fill me-2 text-success"></i></span>
-                                <span th:if="${(c.historialVeterinario == null or c.historialVeterinario == '') and (c.estado.name() == 'PENDIENTE' or c.estado.name() == 'CONFIRMADA')}"><i
-                                        class="bi bi-dash-circle-fill me-2 text-secondary"></i></span>
-                                <span th:if="${(c.historialVeterinario == null or c.historialVeterinario == '') and c.estado.name() == 'ATENDIDA'}"><i
-                                        class="bi bi-question-circle-fill me-2 text-warning"></i></span>
-                                <span th:if="${(c.historialVeterinario == null or c.historialVeterinario == '') and c.estado.name() == 'CANCELADA'}"><i
-                                        class="bi bi-x-circle-fill me-2 text-danger"></i></span>
-                            </td>
-                            <td class="text-center">
-                                <!-- ADMIN o VETERINARIA puede editar/eliminar siempre -->
-                                <div sec:authorize="hasAnyRole('ADMIN', 'VET')">
-                                    <a th:href="@{/admin/cita/editar(id=${c.id_cita})}"
-                                       class="btn btn-sm btn-outline-primary btn-action">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <a th:href="@{/admin/cita/eliminar(id=${c.id_cita})}"
-                                       class="btn btn-sm btn-outline-danger btn-action"
-                                       onclick="return confirm('¿Seguro que desea eliminar esta cita?')">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </div>
+    <!-- TABLA DE CITAS -->
+    <div class="table-container">
+        <div class="table-card">
+            <div class="card-header">
+                <h4><i class="bi bi-calendar-check"></i> Lista de Citas</h4>
+            </div>
+            <div class="table-wrapper">
+                <table class="tablaData">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Paciente</th>
+                        <th>Mascota</th>
+                        <th>Veterinaria</th>
+                        <th>Veterinario</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Comentarios</th>
+                        <th>Estado</th>
+                        <th>Hist. Vet.</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="c : ${citas}" class="usuario-row">
+                        <td th:text="${c.id_cita}"></td>
+                        <td th:text="${c.usuario.nombre}" class="text-truncate" style="max-width: 120px;"></td>
+                        <td th:text="${c.mascota.nombre}" class="text-truncate" style="max-width: 150px;"></td>
+                        <td th:text="${c.veterinaria.nombre}" class="text-truncate" style="max-width: 150px;"></td>
+                        <td th:text="${c.veterinario != null ? c.veterinario.nombre : 'Sin asignar'}"
+                            class="text-truncate" style="max-width: 150px;"></td>
+                        <td th:text="${#temporals.format(c.fecha, 'dd/MM/yyyy')}"
+                            th:attr="data-order=${#temporals.format(c.fecha, 'yyyy-MM-dd')}"
+                            class="text-center"></td>
+                        <td th:text="${c.hora}" class="text-center"></td>
+                        <td th:text="${c.comentarios}" class="text-truncate" style="max-width: 180px;"></td>
+                        <td class="text-center">
+                            <span th:text="${c.estado}" th:class="'badge ' + ${c.estadoCssClass}"></span>
+                        </td>
+                        <td class="text-center">
+                            <span th:if="${c.historialVeterinario != null and c.historialVeterinario != ''}">
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            </span>
+                            <span th:if="${(c.historialVeterinario == null or c.historialVeterinario == '') and (c.estado.name() == 'PENDIENTE' or c.estado.name() == 'CONFIRMADA')}">
+                                <i class="bi bi-dash-circle-fill text-secondary"></i>
+                            </span>
+                            <span th:if="${(c.historialVeterinario == null or c.historialVeterinario == '') and c.estado.name() == 'ATENDIDA'}">
+                                <i class="bi bi-question-circle-fill text-warning"></i>
+                            </span>
+                            <span th:if="${(c.historialVeterinario == null or c.historialVeterinario == '') and c.estado.name() == 'CANCELADA'}">
+                                <i class="bi bi-x-circle-fill text-danger"></i>
+                            </span>
+                        </td>
+                        <td class="text-center action-buttons">
+                            <!-- ADMIN o VET -->
+                            <div sec:authorize="hasAnyRole('ADMIN', 'VET')">
+                                <a th:href="@{/admin/cita/editar(id=${c.id_cita})}" class="btn-action btn-edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a th:href="@{/admin/cita/eliminar(id=${c.id_cita})}" class="btn-action btn-delete"
+                                   onclick="return confirm('¿Seguro que desea eliminar esta cita?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
 
-                                <!-- PACIENTE puede editar/eliminar solo si la cita está en estado PENDIENTE o CONFIRMADA -->
-                                <div sec:authorize="hasRole('PACIENTE')"
-                                     th:if="${c.estado.name() == 'PENDIENTE' or c.estado.name() == 'CONFIRMADA'}">
-                                    <a th:href="@{/admin/cita/editar(id=${c.id_cita})}"
-                                       class="btn btn-sm btn-outline-primary btn-action">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <a th:href="@{/admin/cita/eliminar(id=${c.id_cita})}"
-                                       class="btn btn-sm btn-outline-danger btn-action"
-                                       onclick="return confirm('¿Seguro que desea eliminar esta cita?')">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            <!-- PACIENTE -->
+                            <div sec:authorize="hasRole('PACIENTE')"
+                                 th:if="${c.estado.name() == 'PENDIENTE' or c.estado.name() == 'CONFIRMADA'}">
+                                <a th:href="@{/admin/cita/editar(id=${c.id_cita})}" class="btn-action btn-edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a th:href="@{/admin/cita/eliminar(id=${c.id_cita})}" class="btn-action btn-delete"
+                                   onclick="return confirm('¿Seguro que desea eliminar esta cita?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
 
 <footer class="footer mt-auto text-white" th:insert="~{fragmentos :: Pie}"></footer>
 
