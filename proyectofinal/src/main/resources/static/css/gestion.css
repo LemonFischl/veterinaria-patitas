@@ -303,7 +303,7 @@ background-color: #622A91;
 
 /*Estilos a label, Admin, Vet, Pac*/
 label[for="rol_1"] {
-  color: #dc3545;
+  color: #9E0098;
 }
 
 label[for="rol_2"] {
@@ -361,16 +361,16 @@ label[for="rol_3"] {
 
 /* Colores de roles */
 .badge-admin {
-    background-color: #dc3545; /* rojo */
+    background-color: #9E0098;
 }
 
 .badge-vet {
-    background-color: #ffc107; /* amarillo */
-    color: #212529;
+    background-color: #ffc107;
+    color: black;
 }
 
 .badge-paciente {
-    background-color: #17a2b8; /* celeste */
+    background-color: #17a2b8;
 }
 
 /* Botones de acción */
