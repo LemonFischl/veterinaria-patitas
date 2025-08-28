@@ -1,5 +1,6 @@
 package com.miempresa.proyectofinal.controller;
 
+import com.miempresa.proyectofinal.exception.EntityNotFoundException;
 import com.miempresa.proyectofinal.model.*;
 import com.miempresa.proyectofinal.service.*;
 import jakarta.validation.Valid;
@@ -108,7 +109,8 @@ public class CitaController {
 
         // Relacionar entidades
         Usuario usuario = usuarioService.obtenerUsuarioPorId(cita.getUsuario().getId_usuario());
-        Mascota mascota = mascotaService.obtenerMascotaPorId(cita.getMascota().getId_mascota());
+        Mascota mascota = mascotaService.obtenerMascotaPorId(cita.getMascota().getId_mascota())
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la mascota.", "paciente/mascota"));
         Veterinaria veterinaria = veterinariaService.obtenerVeterinariaPorId(cita.getVeterinaria().getId_vet());
 
         cita.setUsuario(usuario);

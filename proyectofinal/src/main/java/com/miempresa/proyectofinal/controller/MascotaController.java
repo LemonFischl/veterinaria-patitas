@@ -1,5 +1,6 @@
 package com.miempresa.proyectofinal.controller;
 
+import com.miempresa.proyectofinal.exception.EntityNotFoundException;
 import com.miempresa.proyectofinal.model.RoleName;
 import com.miempresa.proyectofinal.model.Usuario;
 import com.miempresa.proyectofinal.model.Mascota;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
@@ -58,7 +60,7 @@ public class MascotaController {
     }
 
     @PostMapping("/guardar")
-    public String guardarMascota(@Valid @ModelAttribute Mascota mascota, BindingResult result, Model model) {
+    public String guardarMascota(@Valid @ModelAttribute Mascota mascota, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario usuarioLogueado = usuarioService.buscarPorUsername(auth.getName());
         boolean esPaciente = SecurityUtils.esPacienteSinSerAdmin(auth);
@@ -85,12 +87,14 @@ public class MascotaController {
         }
 
         mascotaService.guardarMascota(mascota);
+        redirectAttributes.addFlashAttribute("exito", "La mascota se guardó correctamente.");
         return "redirect:/paciente/mascota/nuevo";
     }
 
     @GetMapping("/eliminar")
     public String eliminarMascota(@RequestParam Long id) throws AccessDeniedException {
-        Mascota mascota = mascotaService.obtenerMascotaPorId(id);
+        Mascota mascota = mascotaService.obtenerMascotaPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la mascota.", "/paciente/mascota/nuevo"));
 
         org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario usuarioLogueado = usuarioService.buscarPorUsername(auth.getName());
@@ -106,7 +110,8 @@ public class MascotaController {
 
     @GetMapping("/editar")
     public String mostrarFormularioEditar(@RequestParam Long id, Model model) throws AccessDeniedException {
-        Mascota mascota = mascotaService.obtenerMascotaPorId(id);
+        Mascota mascota = mascotaService.obtenerMascotaPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la mascota.", "/paciente/mascota/nuevo"));
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario usuarioLogueado = usuarioService.buscarPorUsername(auth.getName());
