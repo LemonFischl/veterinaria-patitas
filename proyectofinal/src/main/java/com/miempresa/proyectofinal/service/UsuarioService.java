@@ -73,8 +73,8 @@ public class UsuarioService {
         usuarioRegisterRepository.deleteById(id);
     }
 
-    public Usuario obtenerUsuarioPorId(Long id) {
-        return usuarioRegisterRepository.findById(id).orElse(null);
+    public Optional<Usuario> obtenerUsuarioPorId(Long id) {
+        return usuarioRegisterRepository.findById(id);
     }
 
     public Usuario buscarPorUsername(String username) {

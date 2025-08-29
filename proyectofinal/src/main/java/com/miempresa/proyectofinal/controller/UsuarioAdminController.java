@@ -1,5 +1,6 @@
 package com.miempresa.proyectofinal.controller;
 
+import com.miempresa.proyectofinal.exception.EntityNotFoundException;
 import com.miempresa.proyectofinal.model.Usuario;
 import com.miempresa.proyectofinal.service.RoleService;
 import com.miempresa.proyectofinal.service.UsuarioService;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.nio.file.AccessDeniedException;
 
 @Controller
 @RequestMapping("/admin/usuario")
@@ -39,7 +43,7 @@ public class UsuarioAdminController {
     @PostMapping("/guardar")
     public String guardarUsuario(@Valid @ModelAttribute("usuario") Usuario usuario,
                                  BindingResult result,
-                                 Model model) {
+                                 Model model, RedirectAttributes redirectAttributes) {
         // VALIDACIONES
         if (usuario.getRoles() == null || usuario.getRoles().isEmpty()) {
             result.rejectValue("roles", "error.usuario", "Seleccione al menos un rol.");
@@ -62,9 +66,8 @@ public class UsuarioAdminController {
         try {
             usuarioService.guardarUsuario(usuario);
 
-            String mensajeExito = "¡Usuario registrado exitosamente!";
-            return "redirect:/admin/usuario/nuevo?exito=" +
-                    java.net.URLEncoder.encode(mensajeExito, java.nio.charset.StandardCharsets.UTF_8);
+            redirectAttributes.addFlashAttribute("exito", "El usuario se guardó correctamente.");
+            return "redirect:/admin/usuario/nuevo";
 
         } catch (Exception e) {
             model.addAttribute("listaRoles", roleService.listarRoles());
@@ -75,8 +78,9 @@ public class UsuarioAdminController {
     }
 
     @GetMapping("/editar")
-    public String mostrarFormularioEditar(@RequestParam Long id, Model model) {
-        Usuario usuario = usuarioService.obtenerUsuarioPorId(id);
+    public String mostrarFormularioEditar(@RequestParam Long id, Model model) throws AccessDeniedException {
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario.", "/admin/usuario/nuevo"));
         model.addAttribute("usuario", usuario);
         model.addAttribute("usuarios", usuarioService.listarUsuarios());
         model.addAttribute("listaRoles", roleService.listarRoles());
@@ -84,7 +88,9 @@ public class UsuarioAdminController {
     }
 
     @GetMapping("/eliminar")
-    public String eliminarUsuario(@RequestParam Long id) {
+    public String eliminarUsuario(@RequestParam Long id) throws AccessDeniedException {
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario.", "/admin/usuario/nuevo"));
         usuarioService.eliminarUsuario(id);
         return "redirect:/admin/usuario/nuevo";
     }

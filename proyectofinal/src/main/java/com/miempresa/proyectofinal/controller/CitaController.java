@@ -108,9 +108,10 @@ public class CitaController {
         }
 
         // Relacionar entidades
-        Usuario usuario = usuarioService.obtenerUsuarioPorId(cita.getUsuario().getId_usuario());
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(cita.getUsuario().getId_usuario())
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario.", "/admin/cita/nuevo"));
         Mascota mascota = mascotaService.obtenerMascotaPorId(cita.getMascota().getId_mascota())
-                .orElseThrow(() -> new EntityNotFoundException("No se encontró la mascota.", "paciente/mascota"));
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la mascota.", "/admin/cita/nuevo"));
         Veterinaria veterinaria = veterinariaService.obtenerVeterinariaPorId(cita.getVeterinaria().getId_vet());
 
         cita.setUsuario(usuario);
