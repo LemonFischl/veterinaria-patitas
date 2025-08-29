@@ -21,114 +21,122 @@
             </div>
             <div class="form-body">
 
-            <form method="post" th:action="@{/vet/veterinaria/guardar}" th:object="${veterinaria}">
-                <input type="hidden" th:field="*{id_vet}"/>
+                <form method="post" th:action="@{/vet/veterinaria/guardar}" th:object="${veterinaria}">
+                    <input type="hidden" th:field="*{id_vet}"/>
 
-                <!-- Mensaje de error -->
-                <div th:if="${error}" class="alert alert-error">
-                    <i class="bi bi-exclamation-triangle-fill"></i>
-                    <span th:text="${error}"></span>
-                    <button type="button" class="close-btn">&times;</button>
-                </div>
+                    <!-- Mensaje de error -->
+                    <div th:if="${error}" class="alert alert-error">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span th:text="${error}"></span>
+                        <button type="button" class="close-btn">&times;</button>
+                    </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="nombre"><i class="fa-regular fa-hospital"></i> Nombre Veterinaria</label>
-                        <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ej: Clínica Patitas Felices"/>
-                        <div class="text-error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre"><i class="fa-regular fa-hospital"></i> Nombre Veterinaria</label>
+                            <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ej: Clínica Patitas Felices"/>
+                            <div class="text-error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="correoElectronico"><i class="bi bi-envelope"></i> Correo Electrónico</label>
+                            <input type="email" id="correoElectronico" th:field="*{correoElectronico}" placeholder="Ej: info@patitasfelices.com"/>
+                            <div class="text-error" th:if="${#fields.hasErrors('correoElectronico')}" th:errors="*{correoElectronico}"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono"><i class="fa-solid fa-phone"></i> Teléfono</label>
+                            <input type="text" id="telefono" th:field="*{telefono}" placeholder="Ej: 987654321"/>
+                            <div class="text-error" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="direccion"><i class="fa-solid fa-location-dot"></i> Dirección</label>
+                            <input type="text" id="direccion" th:field="*{direccion}" placeholder="Ej: Av. Principal 123, Ciudad"/>
+                            <div class="text-error" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sitioWeb"><i class="fa-solid fa-globe"></i> Sitio Web (Opcional)</label>
+                            <input type="url" id="sitioWeb" th:field="*{sitioWeb}" placeholder="Ej: https://www.patitasfelices.com"/>
+                            <div class="text-error" th:if="${#fields.hasErrors('sitioWeb')}" th:errors="*{sitioWeb}"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="imagenUrl"><i class="fa-regular fa-image"></i> Imagen (URL)</label>
+                            <input type="url" id="imagenUrl" th:field="*{imagenUrl}" placeholder="Ej: https://www.misitio.com/imagen.jpg"/>
+                            <div class="text-error" th:if="${#fields.hasErrors('imagenUrl')}" th:errors="*{imagenUrl}"></div>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="correoElectronico"><i class="bi bi-envelope"></i> Correo Electrónico</label>
-                        <input type="email" id="correoElectronico" th:field="*{correoElectronico}" placeholder="Ej: info@patitasfelices.com"/>
-                        <div class="text-error" th:if="${#fields.hasErrors('correoElectronico')}" th:errors="*{correoElectronico}"></div>
+                        <label for="descripcion"><i class="fa-regular fa-message"></i> Descripción</label>
+                        <textarea id="descripcion" th:field="*{descripcion}" rows="3" placeholder="Breve descripción de la veterinaria y sus servicios"></textarea>
+                        <div class="text-error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="telefono"><i class="fa-solid fa-phone"></i> Teléfono</label>
-                        <input type="text" id="telefono" th:field="*{telefono}" placeholder="Ej: 987654321"/>
-                        <div class="text-error" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></div>
+                        <label><i class="fa-solid fa-briefcase"></i> Servicios Generales</label>
+                        <div class="checkbox-group" th:each="servicio : ${T(com.miempresa.proyectofinal.model.ServicioGeneral).values()}">
+                            <label>
+                                <input type="checkbox" th:field="*{serviciosGenerales}" th:value="${servicio}"/>
+                                <span th:text="${#strings.capitalizeWords(#strings.toLowerCase(servicio.name().replace('_', ' ')))}"></span>
+                            </label>
+                        </div>
+                        <div class="text-error" th:if="${#fields.hasErrors('serviciosGenerales')}" th:errors="*{serviciosGenerales}"></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="horaInicio"><i class="fa-regular fa-clock"></i> Hora de Inicio</label>
+                            <input type="time" id="horaInicio" th:name="horaInicio" th:value="${#temporals.format(veterinaria.horaInicio, 'HH:mm')}"/>
+                            <div class="text-error" th:if="${#fields.hasErrors('horaInicio')}" th:errors="*{horaInicio}"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="horaFin"><i class="fa-regular fa-clock"></i> Hora de Fin</label>
+                            <input type="time" id="horaFin" th:name="horaFin" th:value="${#temporals.format(veterinaria.horaFin, 'HH:mm')}"/>
+                            <div class="text-error" th:if="${#fields.hasErrors('horaFin')}" th:errors="*{horaFin}"></div>
+                        </div>
+                    </div>
+
+                    <!-- NUEVO: Días de Atención -->
+                    <div class="form-group">
+                        <label><i class="fa-regular fa-calendar-days"></i> Días de Atención</label>
+                        <div class="checkbox-group" th:each="dia : ${T(com.miempresa.proyectofinal.model.DiasAtencion).values()}">
+                            <label>
+                                <input type="checkbox" th:field="*{diasDeAtencion}" th:value="${dia}"/>
+                                <span th:text="${#strings.capitalizeWords(#strings.toLowerCase(dia.name()))}"></span>
+                            </label>
+                        </div>
+                        <div class="text-error" th:if="${#fields.hasErrors('diasDeAtencion')}" th:errors="*{diasDeAtencion}"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="direccion"><i class="fa-solid fa-location-dot"></i> Dirección</label>
-                        <input type="text" id="direccion" th:field="*{direccion}" placeholder="Ej: Av. Principal 123, Ciudad"/>
-                        <div class="text-error" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"></div>
+                        <label><i class="fa-regular fa-circle-question"></i> Estado</label>
+                        <select th:field="*{estadoVet}">
+                            <option value="" disabled selected>Selecciona un estado</option>
+                            <option th:each="estado : ${T(com.miempresa.proyectofinal.model.EstadoVet).values()}"
+                                    th:value="${estado}" th:text="${#strings.capitalizeWords(#strings.toLowerCase(estado.name()))}"
+                                    th:selected="${veterinaria.estadoVet == estado}">
+                            </option>
+                        </select>
+                        <div class="text-error" th:if="${#fields.hasErrors('estadoVet')}" th:errors="*{estadoVet}"></div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="sitioWeb"><i class="fa-solid fa-globe"></i> Sitio Web (Opcional)</label>
-                        <input type="url" id="sitioWeb" th:field="*{sitioWeb}" placeholder="Ej: https://www.patitasfelices.com"/>
-                        <div class="text-error" th:if="${#fields.hasErrors('sitioWeb')}" th:errors="*{sitioWeb}"></div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="bi bi-check-circle"></i> Guardar
+                        </button>
+                        <a href="/vet/veterinaria/nuevo" class="btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancelar
+                        </a>
                     </div>
-
-                    <div class="form-group">
-                        <label for="imagenUrl"><i class="fa-regular fa-image"></i> Imagen (URL)</label>
-                        <input type="url" id="imagenUrl" th:field="*{imagenUrl}" placeholder="Ej: https://www.misitio.com/imagen.jpg"/>
-                        <div class="text-error" th:if="${#fields.hasErrors('imagenUrl')}" th:errors="*{imagenUrl}"></div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="descripcion"><i class="fa-regular fa-message"></i> Descripción</label>
-                    <textarea id="descripcion" th:field="*{descripcion}" rows="3" placeholder="Breve descripción de la veterinaria y sus servicios"></textarea>
-                    <div class="text-error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
-                </div>
-
-                <div class="form-group">
-                    <label><i class="fa-solid fa-briefcase"></i> Servicios Generales</label>
-                    <div class="checkbox-group" th:each="servicio : ${T(com.miempresa.proyectofinal.model.ServicioGeneral).values()}">
-                        <label>
-                            <input type="checkbox" th:field="*{serviciosGenerales}" th:value="${servicio}"/>
-                            <span th:text="${#strings.capitalizeWords(#strings.toLowerCase(servicio.name().replace('_', ' ')))}"></span>
-                        </label>
-                    </div>
-                    <div class="text-error" th:if="${#fields.hasErrors('serviciosGenerales')}" th:errors="*{serviciosGenerales}"></div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="horaInicio"><i class="fa-regular fa-clock"></i> Hora de Inicio</label>
-                        <input type="time" id="horaInicio" th:name="horaInicio" th:value="${#temporals.format(veterinaria.horaInicio, 'HH:mm')}"/>
-                        <div class="text-error" th:if="${#fields.hasErrors('horaInicio')}" th:errors="*{horaInicio}"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="horaFin"><i class="fa-regular fa-clock"></i> Hora de Fin</label>
-                        <input type="time" id="horaFin" th:name="horaFin" th:value="${#temporals.format(veterinaria.horaFin, 'HH:mm')}"/>
-                        <div class="text-error" th:if="${#fields.hasErrors('horaFin')}" th:errors="*{horaFin}"></div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label><i class="fa-regular fa-circle-question"></i> Estado</label>
-                    <select th:field="*{estadoVet}">
-                        <option value="" disabled selected>Selecciona un estado</option>
-                        <option th:each="estado : ${T(com.miempresa.proyectofinal.model.EstadoVet).values()}"
-                                th:value="${estado}" th:text="${#strings.capitalizeWords(#strings.toLowerCase(estado.name()))}"
-                                th:selected="${veterinaria.estadoVet == estado}">
-                        </option>
-                    </select>
-                    <div class="text-error" th:if="${#fields.hasErrors('estadoVet')}" th:errors="*{estadoVet}"></div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">
-                        <i class="bi bi-check-circle"></i> Guardar
-                    </button>
-                    <a href="/vet/veterinaria/nuevo" class="btn-secondary">
-                        <i class="bi bi-x-circle"></i> Cancelar
-                    </a>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-    </div>
 
-    <!-- MENSAJE para usuarios sin permisos -->
-    <div class="mensaje-no-admin" sec:authorize="!hasRole('ADMIN')">
-        <p><i>Solo los administradores pueden registrar nuevas veterinarias.</i></p>
-    </div>
 
     <!-- TABLA DE VETERINARIAS -->
     <div th:class="${#authorization.expression('hasRole(''ADMIN'')')} ? 'table-container' : 'contenedor-full'">
@@ -206,6 +214,7 @@
         </div>
     </div>
 </div>
+
 
 <!--Footer-->
 <footer class="footer mt-auto mt-2 text-white" th:insert="~{fragmentos :: Pie}">

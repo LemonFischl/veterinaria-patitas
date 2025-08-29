@@ -72,7 +72,7 @@
                                         <i class="bi bi-calendar-check me-2"></i> Cita
                                     </a>
                                 </li>
-                                <li sec:authorize="hasAnyRole('ADMIN', 'VET')">
+                                <li sec:authorize="hasAnyRole('ADMIN')">
                                     <a class="dropdown-item"
                                        th:href="${#authorization.expression('hasRole(''ADMIN'')') ? '/vet/veterinaria/nuevo' : '/vet/veterinaria/listar'}">
                                         <i class="bi bi-hospital me-2"></i> Veterinaria
