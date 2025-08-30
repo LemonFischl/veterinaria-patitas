@@ -27,6 +27,13 @@
                         <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
                     </div>
 
+                    <!-- Mensaje de conflicto -->
+                    <div th:if="${conflicto}" class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span th:text="${conflicto}"></span>
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+
                     <!-- Mensaje de error -->
                     <div th:if="${error}" class="alert alert-danger">
                         <i class="bi bi-exclamation-triangle-fill"></i>

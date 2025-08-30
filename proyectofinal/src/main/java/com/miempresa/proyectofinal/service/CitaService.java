@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CitaService {
@@ -31,8 +32,8 @@ public class CitaService {
         citaRepository.deleteById(id);
     }
 
-    public Cita obtenerCitaPorId(Long id) {
-        return citaRepository.findById(id).orElse(null);
+    public Optional<Cita> obtenerCitaPorId(Long id) {
+        return citaRepository.findById(id);
     }
 
     public List<Cita> listarCitasPorUsuario(Long idUsuario) {

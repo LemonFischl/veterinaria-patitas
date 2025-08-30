@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import jakarta.persistence.OptimisticLockException;
 import com.miempresa.proyectofinal.security.SecurityUtils;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class CitaController {
     @PostMapping("/guardar")
     public String guardarCita(@Valid @ModelAttribute("cita") Cita cita,
                               BindingResult result,
-                              Model model) {
+                              Model model, RedirectAttributes redirectAttributes) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario usuarioLogueado = usuarioService.buscarPorUsername(auth.getName());
@@ -81,7 +82,8 @@ public class CitaController {
 
         // Para guardar luego de modificar
         if (esPaciente && cita.getId_cita() != null) {
-            Cita citaExistente = citaService.obtenerCitaPorId(cita.getId_cita());
+            Cita citaExistente = citaService.obtenerCitaPorId(cita.getId_cita())
+                    .orElseThrow(() -> new EntityNotFoundException("No se encontró la cita.", "/admin/cita/nuevo"));;
 
             if (!citaExistente.getUsuario().getId_usuario().equals(usuarioLogueado.getId_usuario()) ||
                     !(citaExistente.getEstado() == EstadoCita.PENDIENTE || citaExistente.getEstado() == EstadoCita.CONFIRMADA)) {
@@ -133,23 +135,23 @@ public class CitaController {
             citaService.guardarCita(cita);
         } catch (ObjectOptimisticLockingFailureException e) {
             String mensaje = "La cita fue modificada por otro usuario. Estás viendo la versión más reciente.";
-            return "redirect:/admin/cita/editar?id=" + cita.getId_cita() +
-                    "&conflicto=" + java.net.URLEncoder.encode(mensaje, java.nio.charset.StandardCharsets.UTF_8);
+            redirectAttributes.addFlashAttribute("conflicto", mensaje);
+            return "redirect:/admin/cita/editar?id=" + cita.getId_cita();
         }
 
         // Mensaje de éxito y redirección
         String mensaje = esNueva
                 ? "¡Cita registrada exitosamente!"
                 : "¡Cita modificada exitosamente!";
-        return "redirect:/admin/cita/nuevo?exito=" +
-                java.net.URLEncoder.encode(mensaje, java.nio.charset.StandardCharsets.UTF_8);
-
+        redirectAttributes.addFlashAttribute("exito", mensaje);
+        return "redirect:/admin/cita/nuevo";
     }
 
     // Elimina una cita por ID
     @GetMapping("/eliminar")
     public String eliminarCita(@RequestParam Long id) {
-        Cita cita = citaService.obtenerCitaPorId(id);
+        Cita cita = citaService.obtenerCitaPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la cita.", "/admin/cita/nuevo"));
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario usuarioLogueado = usuarioService.buscarPorUsername(auth.getName());
@@ -173,7 +175,8 @@ public class CitaController {
     public String mostrarFormularioEditar(@RequestParam Long id,
                                           @RequestParam(required = false) String conflicto,
                                           Model model) {
-        Cita cita = citaService.obtenerCitaPorId(id);
+        Cita cita = citaService.obtenerCitaPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la cita.", "/admin/cita/nuevo"));
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario usuarioLogueado = usuarioService.buscarPorUsername(auth.getName());
