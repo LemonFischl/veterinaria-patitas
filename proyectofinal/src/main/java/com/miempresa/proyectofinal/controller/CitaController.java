@@ -123,7 +123,8 @@ public class CitaController {
 
         // Veterinario puede ser null
         if (cita.getVeterinario() != null && cita.getVeterinario().getId_veterinario() != null) {
-            Veterinario veterinario = veterinarioService.obtenerVeterinarioPorId(cita.getVeterinario().getId_veterinario());
+            Veterinario veterinario = veterinarioService.obtenerVeterinarioPorId(cita.getVeterinario().getId_veterinario())
+                    .orElseThrow(() -> new EntityNotFoundException("No se encontró la veterinario.", "/admin/cita/nuevo"));;
             cita.setVeterinario(veterinario);
         } else {
             cita.setVeterinario(null);
