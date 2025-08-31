@@ -1,5 +1,6 @@
 package com.miempresa.proyectofinal.controller;
 
+import com.miempresa.proyectofinal.exception.EntityNotFoundException;
 import com.miempresa.proyectofinal.model.Veterinaria;
 import com.miempresa.proyectofinal.model.Veterinario;
 import com.miempresa.proyectofinal.service.VeterinariaService;
@@ -52,7 +53,8 @@ public class VeterinarioController {
         }
 
         // Obtener y asignar veterinaria
-        Veterinaria veterinaria = veterinariaService.obtenerVeterinariaPorId(veterinario.getVeterinaria().getId_vet());
+        Veterinaria veterinaria = veterinariaService.obtenerVeterinariaPorId(veterinario.getVeterinaria().getId_vet())
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la veterinaria.", "/vet/veterinario/nuevo"));
         veterinario.setVeterinaria(veterinaria);
 
         veterinarioService.guardarVeterinario(veterinario);

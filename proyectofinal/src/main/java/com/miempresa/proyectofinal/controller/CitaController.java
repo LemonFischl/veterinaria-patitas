@@ -114,7 +114,8 @@ public class CitaController {
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario.", "/admin/cita/nuevo"));
         Mascota mascota = mascotaService.obtenerMascotaPorId(cita.getMascota().getId_mascota())
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la mascota.", "/admin/cita/nuevo"));
-        Veterinaria veterinaria = veterinariaService.obtenerVeterinariaPorId(cita.getVeterinaria().getId_vet());
+        Veterinaria veterinaria = veterinariaService.obtenerVeterinariaPorId(cita.getVeterinaria().getId_vet())
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la veterinaria.", "/admin/cita/nuevo"));
 
         cita.setUsuario(usuario);
         cita.setMascota(mascota);

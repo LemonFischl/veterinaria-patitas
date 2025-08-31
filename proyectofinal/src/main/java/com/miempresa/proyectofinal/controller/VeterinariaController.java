@@ -1,5 +1,6 @@
 package com.miempresa.proyectofinal.controller;
 
+import com.miempresa.proyectofinal.exception.EntityNotFoundException;
 import com.miempresa.proyectofinal.model.EstadoVet;
 import jakarta.validation.Valid;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/vet/veterinaria")
@@ -37,7 +39,7 @@ public class VeterinariaController {
     @PostMapping("/guardar")
     public String guardarVeterinaria(@Valid @ModelAttribute("veterinaria") Veterinaria veterinaria,
                                      BindingResult result,
-                                     Model model) { // Usamos RedirectAttributes
+                                     Model model, RedirectAttributes redirectAttributes) { // Usamos RedirectAttributes
 
         // Si hay errores de validación, redirige y muestra un mensaje genérico.
         // Los errores específicos de campo no se mostrarán después de una redirección con esta estrategia.
@@ -56,7 +58,8 @@ public class VeterinariaController {
 
         // Validación de nombre duplicado en edición
         if (veterinaria.getId_vet() != null) {
-            Veterinaria existente = veterinariaService.obtenerVeterinariaPorId(veterinaria.getId_vet());
+            Veterinaria existente = veterinariaService.obtenerVeterinariaPorId(veterinaria.getId_vet())
+                    .orElseThrow(() -> new EntityNotFoundException("No se encontró la veterinaria.", "/vet/veterinaria/nuevo"));
             if (existente != null && !existente.getNombre().equals(veterinaria.getNombre())
                     && veterinariaService.existsByNombre(veterinaria.getNombre())) {
                 model.addAttribute("veterinarias", veterinariaService.listarVeterinarias());
@@ -68,6 +71,7 @@ public class VeterinariaController {
 
         // Guardar si todo está bien
         veterinariaService.guardarVeterinaria(veterinaria);
+        redirectAttributes.addFlashAttribute("exito", "La veterinaria se guardó correctamente.");
         return "redirect:/vet/veterinaria/nuevo";
     }
 
@@ -89,7 +93,8 @@ public class VeterinariaController {
     // Mostrar formulario para editar una veterinaria existente
     @GetMapping("/editar")
     public String mostrarFormularioEditar(@RequestParam Long id, Model model) {
-        Veterinaria veterinaria = veterinariaService.obtenerVeterinariaPorId(id);
+        Veterinaria veterinaria = veterinariaService.obtenerVeterinariaPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la veterinaria.", "/vet/veterinaria/nuevo"));
         model.addAttribute("veterinaria", veterinaria);
         model.addAttribute("veterinarias", veterinariaService.listarVeterinarias());
         return "vet/veterinaria";

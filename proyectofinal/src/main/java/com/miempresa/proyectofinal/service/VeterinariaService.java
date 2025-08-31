@@ -39,8 +39,8 @@ public class VeterinariaService {
         veterinariaRepository.deleteById(id);
     }
 
-    public Veterinaria obtenerVeterinariaPorId(Long id) {
-        return veterinariaRepository.findById(id).orElse(null);
+    public Optional<Veterinaria> obtenerVeterinariaPorId(Long id) {
+        return veterinariaRepository.findById(id);
     }
 
     // --- Nuevos método para verificación de unicidad

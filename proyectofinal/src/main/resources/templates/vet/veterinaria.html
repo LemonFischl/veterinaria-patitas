@@ -24,11 +24,18 @@
                 <form method="post" th:action="@{/vet/veterinaria/guardar}" th:object="${veterinaria}">
                     <input type="hidden" th:field="*{id_vet}"/>
 
+                    <!-- Mensaje de éxito -->
+                    <div th:if="${exito}" class="alert-success">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span th:text="${exito}"></span>
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+
                     <!-- Mensaje de error -->
-                    <div th:if="${error}" class="alert alert-error">
+                    <div th:if="${error}" class="alert-error">
                         <i class="bi bi-exclamation-triangle-fill"></i>
                         <span th:text="${error}"></span>
-                        <button type="button" class="close-btn">&times;</button>
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
                     </div>
 
                     <div class="form-row">
