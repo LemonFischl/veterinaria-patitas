@@ -7,145 +7,105 @@
     <title>Patitas al Rescate - Inicio</title>
     <!--Librerías css-->
     <th:block th:insert="~{fragmentos :: Links-css}"/>
-</head>
+    <link th:href="@{/css/inicio.css}" rel="stylesheet">
 
-<body>
-<!--Cabecera-->
-<div th:replace="~{fragmentos :: Cabecera}"></div>
+    </head>
 
-<!-- Carrusel -->
-<div id="carouselExampleIndicators" class="carousel slide">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
-                aria-label="Slide 4"></button>
-    </div>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img th:src="@{/IMG/index1.jpg}" class="d-block w-100" alt="...">
-            <!-- Texto de enganche y boton -->
-            <div class="carousel-caption custom-caption ">
-                <h2>Reserva citas de veterinaria en línea las 24h</h2>
-                <h1>Tu Mascota Merece Lo Mejor</h1>
-                <p>En Patitas al Rescate conectamos a dueños de mascotas con las mejores clínicas veterinarias de Lima.
-                    Rapidez, seguridad y sin salir de casa.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img th:src="@{/IMG/index2.jpg}" class="d-block w-100" alt="...">
-            <!-- Texto de enganche y boton -->
-            <div class="carousel-caption custom-caption ">
-                <h2>Reserva tu cita de peluquería las 24h</h2>
-                <h1>Tu Mascota Siempre Radiante</h1>
-                <p>En Patitas al Rescate conectamos a dueños de mascotas con las mejores peluquerías caninas y felinas
-                    de
-                    Lima. Comodidad, estilo y cariño, sin complicaciones.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img th:src="@{/IMG/vet2.jpg}" class="d-block w-100" alt="...">
-            <!-- Texto de enganche y boton -->
-            <div class="carousel-caption custom-caption ">
-                <h2>Consultas en línea 24h</h2>
-                <h1>Atención Veterinaria sin Complicaciones</h1>
-                <p>Accede a consultas veterinarias las 24 horas, sin necesidad de salir de casa, y asegura el bienestar
-                    de tu mascota de manera rápida y eficaz.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img th:src="@{/IMG/peluqueria1.jpg}" class="d-block w-100" alt="...">
-            <!-- Texto de enganche -->
-            <div class="carousel-caption custom-caption ">
-                <h2>Estilo y Comodidad para tu Mascota</h2>
-                <h1>Peluquería de Confianza para Tu Mejor Amigo</h1>
-                <p>Con Patitas al Rescate, tu mascota disfrutará de un corte de pelo y baño con los mejores estilistas,
-                    cuidando su comodidad y bienestar.</p>
-            </div>
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
+    <body>
+    <!--Cabecera-->
+    <div th:replace="~{fragmentos :: Cabecera}"></div>
 
-<div class="container mt-5">
-    <!-- Proposito -->
-    <div class="card border-0 mb-5">
-        <div class="row g-0 align-items-center">
-            <div class="col-md-2">
-                <img th:src="@{/IMG/Veterinarias.jpg}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-4">
-                <div class="card-body">
-                    <h2 class="card-title">Quiénes somos</h2>
-                    <p class="card-text">Te brindamos información sobre las veterinarias más conocidas de todo Lima.</p>
+    <!-- Carrusel -->
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                    aria-label="Slide 4"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img th:src="@{/IMG/index1.jpg}" class="d-block w-100" alt="...">
+                <!-- Texto de enganche y boton -->
+                <div class="carousel-caption custom-caption ">
+                    <h2>Reserva citas de veterinaria en línea las 24h</h2>
+                    <h1>Tu Mascota Merece Lo Mejor</h1>
+                    <p>En Patitas al Rescate conectamos a dueños de mascotas con las mejores clínicas veterinarias de Lima.
+                        Rapidez, seguridad y sin salir de casa.</p>
                 </div>
             </div>
-
-            <div class="col-md-2">
-                <img th:src="@{/IMG/Veterinario.jpg}" class="img-fluid rounded-start" alt="...">
+            <div class="carousel-item">
+                <img th:src="@{/IMG/index2.jpg}" class="d-block w-100" alt="...">
+                <!-- Texto de enganche y boton -->
+                <div class="carousel-caption custom-caption ">
+                    <h2>Reserva tu cita de peluquería las 24h</h2>
+                    <h1>Tu Mascota Siempre Radiante</h1>
+                    <p>En Patitas al Rescate conectamos a dueños de mascotas con las mejores peluquerías caninas y felinas
+                        de
+                        Lima. Comodidad, estilo y cariño, sin complicaciones.</p>
+                </div>
             </div>
-            <div class="col-md-4">
-                <div class="card-body">
-                    <h2 class="card-title">Nuestro Propósito</h2>
-                    <p class="card-text">Nuestro propósito es brindar al usuario información de veterinarias y
-                        comodidades para
-                        las mascotas</p>
+            <div class="carousel-item">
+                <img th:src="@{/IMG/vet2.jpg}" class="d-block w-100" alt="...">
+                <!-- Texto de enganche y boton -->
+                <div class="carousel-caption custom-caption ">
+                    <h2>Consultas en línea 24h</h2>
+                    <h1>Atención Veterinaria sin Complicaciones</h1>
+                    <p>Accede a consultas veterinarias las 24 horas, sin necesidad de salir de casa, y asegura el bienestar
+                        de tu mascota de manera rápida y eficaz.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/IMG/peluqueria1.jpg}" class="d-block w-100" alt="...">
+                <!-- Texto de enganche -->
+                <div class="carousel-caption custom-caption ">
+                    <h2>Estilo y Comodidad para tu Mascota</h2>
+                    <h1>Peluquería de Confianza para Tu Mejor Amigo</h1>
+                    <p>Con Patitas al Rescate, tu mascota disfrutará de un corte de pelo y baño con los mejores estilistas,
+                        cuidando su comodidad y bienestar.</p>
                 </div>
             </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 
-    <!-- Interes -->
-    <div class="card border-0 mb-5">
-        <div class="row g-0 align-items-center">
-            <div class="col-md-2">
-                <img th:src="@{/IMG/interes.jpg}" class="img-fluid rounded-start" alt="...">
+    <section class="about-us">
+        <div class="container-about">
+            <div class="about-text">
+                <h2 class="title-about">Quiénes somos</h2>
+                <p class="text-about">
+                    Somos una plataforma dedicada a brindarte información clara, actualizada y confiable sobre las veterinarias más reconocidas de toda Lima. Nuestro objetivo es ayudarte a encontrar fácilmente el lugar ideal para cuidar la salud y el bienestar de tu mascota.
+                    Ya sea que necesites atención médica, vacunación, servicios de emergencia, peluquería o cuidados especializados, aquí descubrirás las mejores opciones cerca de ti, con la calidad y el cariño que tu engreído merece.
+                </p>
             </div>
-            <div class="col-md-4">
-                <div class="card-body">
-                    <h2 class="card-title">Interés en las mascotas</h2>
-                    <p class="card-text">Nos preocupamos en las mascotas de las personas, por lo cual brindamos
-                        información para
-                        que le des una mejor calidad de vida a tu mascotas</p>
 
-                </div>
-            </div>
-            <div class="col-md-2">
-                <img th:src="@{/IMG/Gatocomiendo.jpeg}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-4">
-                <div class="card-body">
-                    <h2 class="card-title">Importancia a tu mascota</h2>
-                    <p class="card-text">Dale cariño y atención a tu mascota para darle una mejor calidad de vida para
-                        que tu
-                        mejor amigo este sano y saludable</p>
-                </div>
+            <div class="about-image">
+                <img th:src="@{/IMG/logoPatitas.png}">
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
 
-<!--Footer-->
-<footer class="footer mt-auto mt-2 text-white" th:insert="~{fragmentos :: Pie}">
-</footer>
+    <!--Footer-->
+    <footer class="footer mt-auto mt-2 text-white" th:insert="~{fragmentos :: Pie}">
+    </footer>
 
-<!-- Librerías de js-->
-<th:block th:insert="~{fragmentos :: Links-js}"/>
+    <!-- Librerías de js-->
+    <th:block th:insert="~{fragmentos :: Links-js}"/>
 
-</body>
+    </body>
 
-</html>
+    </html>
