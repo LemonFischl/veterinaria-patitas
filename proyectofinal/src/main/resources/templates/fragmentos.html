@@ -17,114 +17,94 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <link th:href="@{/css/gestion.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/tabla-style.css}">
+    <link rel="stylesheet" th:href="@{/css/fonts.css}">
+
 </head>
 
 <!-- Cabecera -->
 <div th:fragment="Cabecera" xmlns:th="http://www.w3.org/1999/xhtml"
      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <header>
-        <nav class="navbar navbar-expand-lg border-body">
-            <div class="container-fluid content-75">
-                <a th:href="@{/}" class="navbar-brand">
-                    <img th:src="@{/IMG/logoPatitas.png}" alt="Logo" height="70px">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-theme="dark"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                    <!-- Menú central -->
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/}">
-                                Inicio
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/veterinarias}">
-                                Veterinarias</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/adopcion}">
-                                Adopción</a>
-                        </li>
+    <header class="navbar">
+        <div class="navbar-container">
+            <!-- Logo -->
+            <a th:href="@{/}" class="navbar-brand">
+                <img th:src="@{/IMG/logoPatitas.png}" alt="Logo">
+            </a>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="gestionDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Gestión
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="gestionDropdown">
-                                <li sec:authorize="hasRole('ADMIN')">
-                                    <a class="dropdown-item" th:href="@{/admin/usuario/nuevo}">
-                                        <i class="bi bi-person me-2"></i> Usuario
-                                    </a>
-                                </li>
-                                <li sec:authorize="hasAnyRole('ADMIN', 'VET', 'PACIENTE')">
-                                    <a class="dropdown-item" th:href="@{/paciente/mascota/nuevo}">
-                                        <i class="fa-solid fa-paw me-2"></i> Mascota
-                                    </a>
-                                </li>
-                                <li sec:authorize="hasAnyRole('ADMIN', 'VET', 'PACIENTE')">
-                                    <a class="dropdown-item" th:href="@{/admin/cita/nuevo}">
-                                        <i class="bi bi-calendar-check me-2"></i> Cita
-                                    </a>
-                                </li>
-                                <li sec:authorize="hasAnyRole('ADMIN')">
-                                    <a class="dropdown-item"
-                                       th:href="${#authorization.expression('hasRole(''ADMIN'')') ? '/vet/veterinaria/nuevo' : '/vet/veterinaria/listar'}">
-                                        <i class="bi bi-hospital me-2"></i> Veterinaria
-                                    </a>
-                                </li>
+            <!-- Botón hamburguesa -->
+            <button class="navbar-toggle" id="navbar-toggle">☰</button>
 
-                                <li sec:authorize="hasAnyRole('ADMIN', 'VET')">
-                                    <a class="dropdown-item" th:href="@{/vet/veterinario/nuevo}">
-                                        <i class="bi bi-person-badge me-2"></i> Veterinario
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+            <!-- Menú -->
+            <nav class="navbar-menu" id="navbar-menu">
+                <ul class="navbar-links">
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/veterinarias}">Veterinarias</a></li>
+                    <li><a th:href="@{/adopcion}">Adopción</a></li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/blog}">
-                                Blog</a>
-                        </li>
+                    <!-- Dropdown Gestión -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-btn">
+                            Gestión <i class="fa-solid fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li sec:authorize="hasRole('ADMIN')">
+                                <a th:href="@{/admin/usuario/nuevo}">
+                                    <i class="bi bi-person me-2"></i> Usuario
+                                </a>
+                            </li>
+                            <li sec:authorize="hasAnyRole('ADMIN','VET','PACIENTE')">
+                                <a th:href="@{/paciente/mascota/nuevo}">
+                                    <i class="fa-solid fa-paw me-2"></i> Mascota
+                                </a>
+                            </li>
+                            <li sec:authorize="hasAnyRole('ADMIN','VET','PACIENTE')">
+                                <a th:href="@{/admin/cita/nuevo}">
+                                    <i class="bi bi-calendar-check me-2"></i> Cita
+                                </a>
+                            </li>
+                            <li sec:authorize="hasRole('ADMIN')">
+                                <a th:href="${#authorization.expression('hasRole(''ADMIN'')') ? '/vet/veterinaria/nuevo' : '/vet/veterinaria/listar'}">
+                                    <i class="bi bi-hospital me-2"></i> Veterinaria
+                                </a>
+                            </li>
+                            <li sec:authorize="hasAnyRole('ADMIN','VET')">
+                                <a th:href="@{/vet/veterinario/nuevo}">
+                                    <i class="bi bi-person-badge me-2"></i> Veterinario
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/contacto}">
-                                Contáctanos
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center text-white" href="#"
-                               role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                <!-- Icono para ADMIN -->
-                                <i class="bi bi-shield-lock me-2" sec:authorize="hasRole('ADMIN')"></i>
-                                <!-- Icono para VET -->
-                                <i class="bi bi-heart-pulse me-2" sec:authorize="hasRole('VET')"></i>
-                                <!-- Icono para USUARIO -->
-                                <i class="bi bi-person-circle me-2" sec:authorize="hasRole('PACIENTE')"></i>
-                                <span sec:authentication="name" class="fw-semibold">Usuario</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                                <li>
-                                    <form th:action="@{/logout}" method="post" class="m-0">
-                                        <button type="submit" class="dropdown-item d-flex align-items-center">
-                                            <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                    <li><a th:href="@{/blog}">Blog</a></li>
+                    <li><a th:href="@{/contacto}">Contáctanos</a></li>
+
+                    <!-- Usuario logueado -->
+                    <li class="dropdown" sec:authorize="isAuthenticated()">
+                        <a href="#" class="dropdown-content">
+                            <i class="bi bi-shield-lock me-2" sec:authorize="hasRole('ADMIN')"></i>
+                            <i class="bi bi-heart-pulse me-2" sec:authorize="hasRole('VET')"></i>
+                            <i class="bi bi-person-circle me-2" sec:authorize="hasRole('PACIENTE')"></i>
+                            <span sec:authentication="name">Usuario</span>
+                            <i class="fa-solid fa-caret-down"></i>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <form th:action="@{/logout}" method="post">
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </header>
 </div>
+
+
 
 <div th:fragment="Pie" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="container-fluid text-center content-75">
@@ -180,17 +160,17 @@
 </div>
 
 <!-- Links de librerias js -->
-<th:block th:fragment="Links-js" xmlns:th="http://www.w3.org/1999/xhtml">
+    <th:block th:fragment="Links-js" xmlns:th="http://www.w3.org/1999/xhtml">
     <!--CDN Bootstrap JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+        <script src="/js/fragmentos.js"></script>
 
     <!-- DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.min.js"></script>
-
     <!-- Inicializar DataTable con idioma español -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -202,5 +182,8 @@
                 });
             });
         });
+
+});
+
     </script>
 </th:block>
