@@ -92,7 +92,7 @@ public class MascotaController {
     }
 
     @GetMapping("/eliminar")
-    public String eliminarMascota(@RequestParam Long id) throws AccessDeniedException {
+    public String eliminarMascota(@RequestParam Long id, RedirectAttributes redirectAttributes) throws AccessDeniedException {
         Mascota mascota = mascotaService.obtenerMascotaPorId(id)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la mascota.", "/paciente/mascota/nuevo"));
 
@@ -105,6 +105,7 @@ public class MascotaController {
         }
 
         mascotaService.eliminarMascota(id);
+        redirectAttributes.addFlashAttribute("exito", "La mascota se eliminó correctamente.");
         return "redirect:/paciente/mascota/nuevo";
     }
 

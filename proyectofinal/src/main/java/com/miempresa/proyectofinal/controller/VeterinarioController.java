@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.nio.file.AccessDeniedException;
 
@@ -40,7 +41,7 @@ public class VeterinarioController {
 
     // Guardar veterinario (nuevo o editado)
     @PostMapping("/guardar")
-    public String guardarVeterinario(@Valid @ModelAttribute Veterinario veterinario, BindingResult result, Model model) {
+    public String guardarVeterinario(@Valid @ModelAttribute Veterinario veterinario, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 
         if (veterinario.getVeterinaria() == null || veterinario.getVeterinaria().getId_vet() == null) {
             result.rejectValue("veterinaria", "error.veterinaria", "Debe seleccionar una veterinaria.");
@@ -58,12 +59,13 @@ public class VeterinarioController {
         veterinario.setVeterinaria(veterinaria);
 
         veterinarioService.guardarVeterinario(veterinario);
+        redirectAttributes.addFlashAttribute("exito", "El veterinario se guardó correctamente.");
         return "redirect:/vet/veterinario/nuevo";
     }
 
     // Eliminar veterinario
     @GetMapping("/eliminar")
-    public String eliminarVeterinario(@RequestParam Long id) throws AccessDeniedException {
+    public String eliminarVeterinario(@RequestParam Long id, RedirectAttributes redirectAttributes) throws AccessDeniedException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean esAdmin = auth.getAuthorities().stream()
                 .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
@@ -73,13 +75,15 @@ public class VeterinarioController {
         }
 
         veterinarioService.eliminarVeterinario(id);
+        redirectAttributes.addFlashAttribute("exito", "El veterinario se eliminó correctamente.");
         return "redirect:/vet/veterinario/nuevo";
     }
 
     // Editar veterinario
     @GetMapping("/editar")
     public String mostrarFormularioEditar(@RequestParam Long id, Model model) {
-        Veterinario veterinario = veterinarioService.obtenerVeterinarioPorId(id);
+        Veterinario veterinario = veterinarioService.obtenerVeterinarioPorId(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el veterinario.", "/vet/veterinario/nuevo"));
         model.addAttribute("veterinario", veterinario);
         model.addAttribute("veterinarios", veterinarioService.listarVeterinarios());
         model.addAttribute("veterinarias", veterinariaService.listarVeterinarias());

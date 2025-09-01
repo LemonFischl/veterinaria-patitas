@@ -88,10 +88,11 @@ public class UsuarioAdminController {
     }
 
     @GetMapping("/eliminar")
-    public String eliminarUsuario(@RequestParam Long id) throws AccessDeniedException {
+    public String eliminarUsuario(@RequestParam Long id, RedirectAttributes redirectAttributes) throws AccessDeniedException {
         Usuario usuario = usuarioService.obtenerUsuarioPorId(id)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario.", "/admin/usuario/nuevo"));
         usuarioService.eliminarUsuario(id);
+        redirectAttributes.addFlashAttribute("exito", "El usuario se eliminó correctamente.");
         return "redirect:/admin/usuario/nuevo";
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VeterinarioService {
@@ -28,8 +29,8 @@ public class VeterinarioService {
         veterinarioRepository.deleteById(id);
     }
 
-    public Veterinario obtenerVeterinarioPorId(Long id) {
-        return veterinarioRepository.findById(id).orElse(null);
+    public Optional<Veterinario> obtenerVeterinarioPorId(Long id) {
+        return veterinarioRepository.findById(id);
     }
 
 }
