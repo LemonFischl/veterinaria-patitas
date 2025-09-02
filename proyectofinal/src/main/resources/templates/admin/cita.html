@@ -81,7 +81,7 @@
                             <label for="veterinaria"><i class="fa-regular fa-hospital"></i> Veterinaria</label>
                             <select id="veterinaria" th:field="*{veterinaria.id_vet}" required>
                                 <option value="" disabled selected>Seleccione una veterinaria</option>
-                                <option th:each="v : ${veterinarias}" th:value="${v.id_vet}" th:text="${v.nombre}" th:data-servicios="${v.serviciosGenerales}"></option>
+                                <option th:each="v : ${veterinarias}" th:value="${v.id_vet}" th:text="${v.nombre}" th:attr="data-servicios=${v.serviciosGenerales}, data-estado=${v.estadoVet}"></option>
                             </select>
                             <div th:if="${#fields.hasErrors('veterinaria')}" th:errors="*{veterinaria}" class="error"></div>
                         </div>

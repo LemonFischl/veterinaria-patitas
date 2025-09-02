@@ -9,6 +9,25 @@ document.addEventListener('DOMContentLoaded', function () {
         return null;
     }
 
+    function filtrarUsuariosConMascotas() {
+        if (!usuarioSelect || !mascotaSelect) return;
+
+        const usuariosConMascotas = new Set(
+            Array.from(mascotaSelect.options)
+                .map(opt => opt.getAttribute('data-usuario-id'))
+                .filter(id => id) // filtrar nulos o vacíos
+        );
+
+        Array.from(usuarioSelect.options).forEach(option => {
+            if (option.value === '') return; // dejar "Seleccione..." o vacío
+            if (!usuariosConMascotas.has(option.value)) {
+                option.style.display = 'none';
+            } else {
+                option.style.display = '';
+            }
+        });
+    }
+
     function filtrarMascotasPorUsuario() {
         const usuarioId = obtenerUsuarioId();
         if (!usuarioId || !mascotaSelect) return;
@@ -35,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Ejecutar una vez al cargar
+    filtrarUsuariosConMascotas();
     filtrarMascotasPorUsuario();
 
     // VETERINARIA: servicios y veterinarios
@@ -43,6 +63,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const veterinarioSelect = document.getElementById('veterinarioSelect');
 
     if (!veterinariaSelect) return;
+
+    function filtrarVeterinariasActivas() {
+        Array.from(veterinariaSelect.options).forEach(option => {
+            const estado = option.getAttribute('data-estado');
+            if (estado !== 'ACTIVO' && option.value !== '') {
+                option.style.display = 'none';
+            } else {
+                option.style.display = '';
+            }
+        });
+        const visibleOptions = Array.from(veterinariaSelect.options)
+            .filter(opt => opt.style.display !== 'none' && opt.value !== '');
+
+        veterinariaSelect.value = visibleOptions.length > 0 ? visibleOptions[0].value : '';
+    }
 
     function actualizarServicios() {
         serviciosUl.innerHTML = '';
@@ -90,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Ejecutar al cargar
     setTimeout(() => {
+        filtrarVeterinariasActivas();
         actualizarServicios();
         filtrarVeterinarios();
     }, 0);
