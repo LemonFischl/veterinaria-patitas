@@ -90,7 +90,7 @@
                             <label><i class="fa-solid fa-user-doctor"></i> Veterinario</label>
                             <select id="veterinarioSelect" th:field="*{veterinario.id_veterinario}">
                                 <option value="">Sin asignar</option>
-                                <option th:each="vet : ${veterinarios}" th:value="${vet.id_veterinario}" th:text="${vet.nombre}"></option>
+                                <option th:each="vet : ${veterinarios}" th:value="${vet.id_veterinario}" th:text="${vet.nombre}" th:attr="data-vet-vet=${vet.veterinaria.id_vet}"></option>
                             </select>
                         </div>
                     </div>
