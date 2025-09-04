@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-
+import java.util.List;
 
 @Entity
 @Table(name = "veterinario")
@@ -38,6 +38,9 @@ public class Veterinario {
     @ManyToOne
     @JoinColumn(name = "id_vet")
     private Veterinaria veterinaria;
+
+    @OneToMany(mappedBy = "veterinario")
+    private List<Cita> citas;
 
     public Especialidad getEspecialidad() {
         return especialidad;

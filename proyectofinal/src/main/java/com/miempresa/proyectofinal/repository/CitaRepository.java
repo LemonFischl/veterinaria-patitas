@@ -10,5 +10,8 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
 
     @Query("SELECT c FROM Cita c WHERE c.usuario.id_usuario = :idUsuario")
     List<Cita> findCitasPorUsuario(@Param("idUsuario") Long idUsuario);
+
+    @Query("SELECT COUNT(c) > 0 FROM Cita c WHERE c.veterinario.id_veterinario = :idVeterinario")
+    boolean existsByVeterinario(@Param("idVeterinario") Long idVeterinario);
 }
 

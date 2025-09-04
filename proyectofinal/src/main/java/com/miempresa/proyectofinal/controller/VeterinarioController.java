@@ -74,8 +74,12 @@ public class VeterinarioController {
             throw new AccessDeniedException("Solo el administrador puede eliminar veterinarios.");
         }
 
-        veterinarioService.eliminarVeterinario(id);
-        redirectAttributes.addFlashAttribute("exito", "El veterinario se eliminó correctamente.");
+        try {
+            veterinarioService.eliminarVeterinario(id);
+            redirectAttributes.addFlashAttribute("exito", "El veterinario se eliminó correctamente.");
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
         return "redirect:/vet/veterinario/nuevo";
     }
 
