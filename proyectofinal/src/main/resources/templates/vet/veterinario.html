@@ -28,12 +28,16 @@
 
                     <!-- Mensaje de éxito -->
                     <div th:if="${exito}" class="alert-success">
+                        <i class="bi bi-check-circle-fill"></i>
                         <span th:text="${exito}"></span>
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
                     </div>
 
                     <!-- Mensaje de error -->
-                    <div th:if="${error}" class="alert-error">
+                    <div th:if="${error}" class="alert-danger">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
                         <span th:text="${error}"></span>
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
                     </div>
 
                     <input type="hidden" th:field="*{id_veterinario}" />
