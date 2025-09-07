@@ -2,6 +2,7 @@ package com.miempresa.proyectofinal.service;
 
 import com.miempresa.proyectofinal.model.EstadoCita;
 import com.miempresa.proyectofinal.model.Mascota;
+import com.miempresa.proyectofinal.repository.CitaRepository;
 import com.miempresa.proyectofinal.repository.MascotaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ import java.util.Optional;
 @Service
 public class MascotaService {
     private final MascotaRepository mascotaRepository;
+    private final CitaRepository citaRepository;
 
     @Autowired
-    public MascotaService(MascotaRepository mascotaRepository) {
+    public MascotaService(MascotaRepository mascotaRepository, CitaRepository citaRepository) {
         this.mascotaRepository = mascotaRepository;
+        this.citaRepository = citaRepository;
     }
 
     public void guardarMascota(Mascota mascota) {
@@ -28,6 +31,10 @@ public class MascotaService {
     }
 
     public void eliminarMascota(Long id) {
+        boolean tieneCitas = citaRepository.existsByMascota(id);
+        if (tieneCitas) {
+            throw new IllegalStateException("No se puede eliminar la mascota con citas asociadas.");
+        }
         mascotaRepository.deleteById(id);
     }
 

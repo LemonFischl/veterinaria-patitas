@@ -104,8 +104,13 @@ public class MascotaController {
             throw new AccessDeniedException("No puedes eliminar esta mascota.");
         }
 
-        mascotaService.eliminarMascota(id);
-        redirectAttributes.addFlashAttribute("exito", "La mascota se eliminó correctamente.");
+        try {
+            mascotaService.eliminarMascota(id);
+            redirectAttributes.addFlashAttribute("exito", "La mascota se eliminó correctamente.");
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return "redirect:/paciente/mascota/nuevo";
     }
 
