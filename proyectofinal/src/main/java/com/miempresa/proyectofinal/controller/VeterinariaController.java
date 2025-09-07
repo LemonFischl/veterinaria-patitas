@@ -86,8 +86,12 @@ public class VeterinariaController {
     // Eliminar veterinaria por ID
     @GetMapping("/eliminar")
     public String eliminarVeterinaria(@RequestParam Long id, RedirectAttributes redirectAttributes) {
-        veterinariaService.eliminarVeterinaria(id);
-        redirectAttributes.addFlashAttribute("exito", "La veterinaria se eliminó correctamente.");
+        try {
+            veterinariaService.eliminarVeterinaria(id);
+            redirectAttributes.addFlashAttribute("exito", "La veterinaria se eliminó correctamente.");
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
         return "redirect:/vet/veterinaria/nuevo";
     }
 

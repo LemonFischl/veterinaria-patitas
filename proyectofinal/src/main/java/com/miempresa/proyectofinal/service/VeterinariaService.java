@@ -1,6 +1,7 @@
 package com.miempresa.proyectofinal.service;
 
 import com.miempresa.proyectofinal.model.Veterinaria;
+import com.miempresa.proyectofinal.repository.CitaRepository;
 import com.miempresa.proyectofinal.repository.VeterinariaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,12 @@ import java.util.Optional;
 @Service
 public class VeterinariaService {
     private final VeterinariaRepository veterinariaRepository;
+    private final CitaRepository citaRepository;
 
     @Autowired
-    public VeterinariaService(VeterinariaRepository veterinariaRepository) {
+    public VeterinariaService(VeterinariaRepository veterinariaRepository, CitaRepository citaRepository) {
         this.veterinariaRepository = veterinariaRepository;
+        this.citaRepository = citaRepository;
     }
 
     public void guardarVeterinaria(Veterinaria veterinaria) {
@@ -36,6 +39,10 @@ public class VeterinariaService {
     }
 
     public void eliminarVeterinaria(Long id) {
+        boolean tieneCitas = citaRepository.existsByVeterinaria(id);
+        if (tieneCitas) {
+            throw new IllegalStateException("No se puede eliminar la veterinaria con citas asociadas.");
+        }
         veterinariaRepository.deleteById(id);
     }
 
