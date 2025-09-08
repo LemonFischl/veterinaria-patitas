@@ -1,6 +1,7 @@
 package com.miempresa.proyectofinal.service;
 
 import com.miempresa.proyectofinal.model.Usuario;
+import com.miempresa.proyectofinal.repository.CitaRepository;
 import com.miempresa.proyectofinal.repository.UsuarioRegisterRepository;
 import com.miempresa.proyectofinal.model.RoleName;
 import jakarta.transaction.Transactional;
@@ -18,11 +19,13 @@ import java.util.Optional;
 public class UsuarioService {
     private final UsuarioRegisterRepository usuarioRegisterRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CitaRepository citaRepository;
 
     @Autowired
-    public UsuarioService(UsuarioRegisterRepository usuarioRegisterRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRegisterRepository usuarioRegisterRepository, PasswordEncoder passwordEncoder, CitaRepository citaRepository) {
         this.usuarioRegisterRepository = usuarioRegisterRepository;
         this.passwordEncoder = passwordEncoder;
+        this.citaRepository = citaRepository;
     }
 
     @Transactional
@@ -70,6 +73,10 @@ public class UsuarioService {
                 !existente.get().getId_usuario().equals(usuario.getId_usuario());
     }
     public void eliminarUsuario(Long id) {
+        boolean tieneCitas = citaRepository.existsByUsuario(id);
+        if (tieneCitas) {
+            throw new IllegalStateException("No se puede eliminar el usuario con citas asociadas.");
+        }
         usuarioRegisterRepository.deleteById(id);
     }
 
