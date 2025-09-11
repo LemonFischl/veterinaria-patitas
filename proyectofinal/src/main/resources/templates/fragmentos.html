@@ -42,7 +42,7 @@
                     <li><a th:href="@{/adopcion}">Adopción</a></li>
 
                     <!-- Dropdown Gestión -->
-                    <li class="dropdown">
+                    <li sec:authorize="hasAnyRole('ADMIN','VET','PACIENTE')" class="dropdown">
                         <a href="#" class="dropdown-btn">
                             Gestión <i class="fa-solid fa-caret-down"></i>
                         </a>
@@ -97,6 +97,12 @@
                                 </form>
                             </li>
                         </ul>
+                    </li>
+                    <!-- Usuario no autenticado - Se muestra cuando NO hay sesión -->
+                    <li sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/auth/login}" class="login-btn">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+                        </a>
                     </li>
                 </ul>
             </nav>

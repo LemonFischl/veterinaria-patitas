@@ -48,19 +48,19 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests(authz -> authz
                         // Recursos públicos
-                        .requestMatchers("/auth/**", "/css/**", "/js/**", "/IMG/**").permitAll()
+                        .requestMatchers("/", "/auth/**", "/css/**", "/js/**", "/IMG/**").permitAll()
 
-                        //Rutas para mascota
+                        // Rutas para mascota
                         .requestMatchers("/paciente/mascota/nuevo", "/paciente/mascota/guardar").hasAnyRole("ADMIN", "PACIENTE", "VET")
 
-                        //Rutas para citas
+                        // Rutas para citas
                         .requestMatchers("/admin/cita/**").hasAnyRole("PACIENTE", "VET", "ADMIN")
 
-                        //Rutas para veterinarias
+                        // Rutas para veterinarias
                         .requestMatchers("/vet/veterinaria/nuevo", "/vet/veterinaria/guardar", "/vet/veterinaria/editar/**", "/vet/veterinaria/eliminar/**").hasRole("ADMIN")
                         .requestMatchers("/vet/veterinaria/listar").hasAnyRole("ADMIN", "VET")
 
-                        //Rutas para veterinarios
+                        // Rutas para veterinarios
                         .requestMatchers("/vet/veterinario/**").hasAnyRole("ADMIN", "VET")
 
                         // Rutas para administrador
@@ -72,8 +72,7 @@ public class WebSecurityConfig {
                         // Rutas para pacientes
                         .requestMatchers("/paciente/**").hasAnyRole("ADMIN", "PACIENTE")
 
-                        // Cualquier otra petición requiere autenticación
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/auth/login")
@@ -84,7 +83,7 @@ public class WebSecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout=true")
+                        .logoutSuccessUrl("/?logout=true")
                         .permitAll()
                 );
 
