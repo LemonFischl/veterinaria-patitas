@@ -40,6 +40,7 @@
                     <li><a th:href="@{/}">Inicio</a></li>
                     <li><a th:href="@{/veterinarias}">Veterinarias</a></li>
                     <li><a th:href="@{/adopcion}">Adopción</a></li>
+                    <li sec:authorize="hasRole('PACIENTE')"><a th:href="@{/paciente/mis-citas/listar}">Mis Citas</a></li>
 
                     <!-- Dropdown Gestión -->
                     <li sec:authorize="hasAnyRole('ADMIN','VET','PACIENTE')" class="dropdown">
