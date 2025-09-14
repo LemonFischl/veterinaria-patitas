@@ -404,9 +404,6 @@
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
 
             .faq-question {
                 padding: 1.2rem;
