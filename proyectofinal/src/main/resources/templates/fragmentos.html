@@ -79,16 +79,14 @@
                     <li><a th:href="@{/blog}">Blog</a></li>
                     <li><a th:href="@{/contacto}">Contáctanos</a></li>
 
-                    <!-- Usuario logueado -->
                     <li class="dropdown" sec:authorize="isAuthenticated()">
-                        <a href="#" class="dropdown-content">
+                        <a href="#" class="dropdown-btn">
                             <i class="bi bi-shield-lock me-2" sec:authorize="hasRole('ADMIN')"></i>
                             <i class="bi bi-heart-pulse me-2" sec:authorize="hasRole('VET')"></i>
                             <i class="bi bi-person-circle me-2" sec:authorize="hasRole('PACIENTE')"></i>
-                            <span sec:authentication="name">Usuario</span>
+                            <span sec:authentication="name">heber29</span>
                             <i class="fa-solid fa-caret-down"></i>
                         </a>
-
                         <ul class="dropdown-menu">
                             <li>
                                 <form th:action="@{/logout}" method="post">
