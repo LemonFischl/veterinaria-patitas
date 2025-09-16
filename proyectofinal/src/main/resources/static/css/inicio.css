@@ -7,7 +7,7 @@
 .section-about-us {
     display:flex;
     width: 100%;
-    height:90vh;
+    height:70vh;
     background-color: #FEFEFE;
 }
 
@@ -127,14 +127,6 @@
     transition: all 0.3s ease;
 }
 
-.specialty-card::before {
-    content: "▸";
-    position: absolute;
-    left: 0;
-    font-size: 1.2rem;
-    color: #FFF;
-    transition: all 0.3s ease;
-}
 
 .specialty-card h3 {
     margin: 0;
@@ -151,9 +143,6 @@
     color: #ffd700;
 }
 
-.specialty-card:hover::before {
-    transform: scale(1.3);
-}
 
 @media (max-width: 992px) {
     .specialty-container {
@@ -184,7 +173,7 @@
 
 @media (max-width: 600px) {
     .specialty-columns-container {
-        flex-direction: column;
+        flex-direction: row;
         gap: 20px;
     }
 
@@ -340,7 +329,7 @@
         }
 
         .faq-title {
-            font-size: 1.8rem;
+            font-size: 2.5rem;
             margin-bottom: 2.5rem;
             text-align:center;
             font-family: "Poppins", sans-serif;
