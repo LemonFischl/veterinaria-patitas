@@ -14,31 +14,97 @@
 <div th:replace="~{fragmentos :: Cabecera}"></div>
 
 <!--Contenido principal-->
-<div class="agenda-container">
-    <h4><i class="bi bi-calendar-check"></i>Mis Citas</h4>
+<div class="container-fluid my-4">
+    <div class="row">
+        <!-- Sidebar de filtros -->
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <i class="bi bi-funnel"></i> Filtrar Citas
+                </div>
+                <div class="card-body">
+                    <form method="get" th:action="@{/mis-citas}">
+                        <!-- Filtro por estado -->
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-flag"></i> Estado</label>
+                            <select class="form-select" name="estado">
+                                <option value="">Todos</option>
+                                <option th:each="e : ${estados}"
+                                        th:value="${e}"
+                                        th:text="${e}">
+                                </option>
+                            </select>
+                        </div>
 
-    <!-- Iterar sobre las citas -->
-    <div th:each="c : ${citas}" class="cita-card">
-        <div class="cita-header">
-            <h5><i class="bi bi-calendar-event"></i>
-                <span th:text="${#temporals.format(c.fecha, 'dd/MM/yyyy')}"></span>
-                - <span th:text="${c.hora}"></span>
-            </h5>
-            <span class="estado" th:text="${c.estado}" th:class="'badge ' + ${c.estadoCssClass}"></span>
+                        <!-- Filtro por fecha -->
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-calendar-event"></i> Fecha</label>
+                            <input type="date" class="form-control" name="fecha">
+                        </div>
+
+                        <!-- Filtro por veterinaria -->
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fa-regular fa-hospital"></i> Veterinaria</label>
+                            <select class="form-select" name="veterinariaId">
+                                <option value="">Todas</option>
+                                <option th:each="v : ${veterinariasUsuario}"
+                                        th:value="${v.id}"
+                                        th:text="${v.nombre}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Filtro por mascota -->
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fa-solid fa-paw"></i> Mascota</label>
+                            <select class="form-select" name="mascotaId">
+                                <option value="">Todas</option>
+                                <option th:each="m : ${mascotasUsuario}"
+                                        th:value="${m.id}"
+                                        th:text="${m.nombre}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-search"></i> Aplicar Filtros
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <div class="cita-body">
-            <p><i class="fa-solid fa-paw"></i> <strong>Mascota:</strong> <span th:text="${c.mascota.nombre}"></span></p>
-            <p><i class="fa-regular fa-hospital"></i> <strong>Veterinaria:</strong> <span th:text="${c.veterinaria.nombre}"></span></p>
-            <p><i class="fa-solid fa-user-doctor"></i> <strong>Veterinario:</strong>
-                <span th:text="${c.veterinario != null ? c.veterinario.nombre : 'Sin asignar'}"></span>
-            </p>
-            <p><i class="fa-regular fa-message"></i> <strong>Comentarios:</strong>
-                <span th:text="${c.comentarios}"></span>
-            </p>
-            <p><i class="bi bi-file-medical"></i> <strong>Historial del Veterinario:</strong>
-                <span th:text="${c.historialVeterinario != null ? c.historialVeterinario : 'No disponible'}"></span>
-            </p>
+        <!-- Listado de citas -->
+        <div class="col-md-9">
+            <div class="agenda-container">
+                <h4><i class="bi bi-calendar-check"></i> Mis Citas</h4>
+
+                <!-- Iterar sobre las citas -->
+                <div th:each="c : ${citas}" class="cita-card card mb-3 shadow-sm">
+                    <div class="cita-header card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-calendar-event"></i>
+                            <span th:text="${#temporals.format(c.fecha, 'dd/MM/yyyy')}"></span>
+                            - <span th:text="${c.hora}"></span>
+                        </h5>
+                        <span class="estado badge" th:text="${c.estado}" th:class="'badge ' + ${c.estadoCssClass}"></span>
+                    </div>
+
+                    <div class="cita-body card-body">
+                        <p><i class="fa-solid fa-paw"></i> <strong>Mascota:</strong> <span th:text="${c.mascota.nombre}"></span></p>
+                        <p><i class="fa-regular fa-hospital"></i> <strong>Veterinaria:</strong> <span th:text="${c.veterinaria.nombre}"></span></p>
+                        <p><i class="fa-solid fa-user-doctor"></i> <strong>Veterinario:</strong>
+                            <span th:text="${c.veterinario != null ? c.veterinario.nombre : 'Sin asignar'}"></span>
+                        </p>
+                        <p><i class="fa-regular fa-message"></i> <strong>Comentarios:</strong>
+                            <span th:text="${c.comentarios}"></span>
+                        </p>
+                        <p><i class="bi bi-file-medical"></i> <strong>Historial del Veterinario:</strong>
+                            <span th:text="${c.historialVeterinario != null ? c.historialVeterinario : 'No disponible'}"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
