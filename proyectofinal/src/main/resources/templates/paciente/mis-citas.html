@@ -19,11 +19,11 @@
         <!-- Sidebar de filtros -->
         <div class="col-md-3 mb-3">
             <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header morado text-white">
                     <i class="bi bi-funnel"></i> Filtrar Citas
                 </div>
                 <div class="card-body">
-                    <form method="get" th:action="@{/mis-citas}">
+                    <form method="get" th:action="@{/paciente/mis-citas/listar}">
                         <!-- Filtro por estado -->
                         <div class="mb-3">
                             <label class="form-label"><i class="bi bi-flag"></i> Estado</label>
@@ -48,7 +48,7 @@
                             <select class="form-select" name="veterinariaId">
                                 <option value="">Todas</option>
                                 <option th:each="v : ${veterinariasUsuario}"
-                                        th:value="${v.id}"
+                                        th:value="${v.id_vet}"
                                         th:text="${v.nombre}">
                                 </option>
                             </select>
@@ -60,7 +60,7 @@
                             <select class="form-select" name="mascotaId">
                                 <option value="">Todas</option>
                                 <option th:each="m : ${mascotasUsuario}"
-                                        th:value="${m.id}"
+                                        th:value="${m.id_mascota}"
                                         th:text="${m.nombre}">
                                 </option>
                             </select>
