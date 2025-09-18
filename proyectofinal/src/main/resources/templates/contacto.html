@@ -13,27 +13,21 @@
 <body>
 <!--Cabecera-->
 <div th:replace="~{fragmentos :: Cabecera}"></div>
-
-<form class="contact-form">
-    <h3>CONTACTO</h3>
-    <div class="form-row">
-        <div class="form-group">
+<section class="section-contact">
+<form>
+    <h3 class="title-contact">CONTACTO</h3>
+    <div class="form-input">
+        <div class="form-group-contact">
             <input type="text" placeholder="Nombres" required>
         </div>
-        <div class="form-group">
-            <input type="text" placeholder="Apellidos" required>
-        </div>
-        <div class="form-group">
+        <div class="form-group-contact">
             <input type="email" placeholder="Correo" required>
         </div>
-        <div class="form-group">
+        <div class="form-group-contact">
             <input type="tel" placeholder="Celular" required>
         </div>
-        <div class="form-group">
-            <input type="text" placeholder="Ciudad" required>
-        </div>
-        <div class="form-group">
-            <input type="text" placeholder="Distrito" required>
+        <div class="form-group-contact">
+            <input type="text" placeholder="Dirección" required>
         </div>
     </div>
     <div class="referral">
@@ -57,15 +51,11 @@
     <div class="comment">
         <textarea placeholder="Déjanos tu comentario" rows="6"></textarea>
     </div>
-    <div class="terms">
-        <label>
-            <input type="checkbox" required> Acepto los términos y condiciones
-        </label>
-    </div>
     <div class="submit">
         <button type="submit">Enviar</button>
     </div>
 </form>
+</section>
 
 <!--Footer-->
 <footer class="footer mt-auto mt-2 text-white" th:insert="~{fragmentos :: Pie}">

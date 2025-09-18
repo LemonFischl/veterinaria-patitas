@@ -1,3 +1,8 @@
+.section-contact {
+    width: 80%;
+    margin: auto;
+}
+
 .form-container {
     background-color: white;
     padding: 40px;
@@ -7,20 +12,21 @@
     margin: 0 15px;
 }
 
-.contact-form h3 {
+.title-contact {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
     text-align: center;
-    font-size: 24px;
-    color: #4CAF50;
-    margin-bottom: 30px;
+    font-size: 3.5rem;
+    color: #333;
 }
 
-.form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+.form-input {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 15px; /* Espacio entre campos */
 }
 
-.form-group {
+.form-group-contact {
     flex: 1 1 45%;
 }
 
@@ -28,15 +34,15 @@ input, textarea {
     width: 100%;
     padding: 15px;
     font-size: 16px;
-    border: 2px solid #ddd;
+    border: 2px solid #622A91;
     border-radius: 8px;
     margin-bottom: 15px;
-    background-color: #f9f9f9;
+    background-color: #fafafa;
     transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
-input:focus, textarea:focus {
-    border-color: #4CAF50;
+.form-group-contact input:focus, textarea:focus {
+    border-color: #ffd700;
     background-color: #fff;
     outline: none;
 }
@@ -96,11 +102,11 @@ input:focus, textarea:focus {
 }
 
 @media (max-width: 768px) {
-    .form-row {
-        flex-direction: column;
+    .title-contact {
+        font-size:2.5rem;
     }
 
-    .form-group {
+    .form-group-contact {
         flex: 1 1 100%;
     }
 }
