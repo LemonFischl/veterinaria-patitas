@@ -1,6 +1,7 @@
 .section-contact {
     width: 80%;
     margin: auto;
+    padding: 1rem 0;
 }
 
 .form-container {
@@ -22,8 +23,8 @@
 
 .form-input {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
-    gap: 15px; /* Espacio entre campos */
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px;
 }
 
 .form-group-contact {
@@ -34,7 +35,7 @@ input, textarea {
     width: 100%;
     padding: 15px;
     font-size: 16px;
-    border: 2px solid #622A91;
+    border: 2px solid #bdbdbd;
     border-radius: 8px;
     margin-bottom: 15px;
     background-color: #fafafa;
@@ -46,7 +47,9 @@ input, textarea {
     background-color: #fff;
     outline: none;
 }
-
+.referral {
+    margin:1rem 0;
+}
 .referral p {
     font-size: 16px;
     font-weight: bold;
@@ -60,7 +63,9 @@ input, textarea {
     font-size: 14px;
     color: #555;
 }
-
+.comment {
+    margin: 1rem 0;
+}
 .comment textarea {
     resize: none;
 }
@@ -83,7 +88,8 @@ input, textarea {
 }
 
 .submit button {
-    background-color: #4CAF50;
+    background-color: #622A91;
+    font-family: "Poppins", sans-serif;
     color: white;
     padding: 15px 30px;
     font-size: 18px;
@@ -94,11 +100,11 @@ input, textarea {
 }
 
 .submit button:hover {
-    background-color: #45a049;
+    background-color: #522382;
 }
 
 .submit button:active {
-    background-color: #388e3c;
+    background-color: #522382;
 }
 
 @media (max-width: 768px) {
