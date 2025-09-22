@@ -1,46 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patitas al Rescate - Mis Mascotas</title>
-    <!--Librerías css-->
+    <!-- Librerías css -->
     <th:block th:insert="~{fragmentos :: Links-css}" />
 </head>
-
 <body>
-<!--Cabecera-->
+<!-- Cabecera -->
 <div th:replace="~{fragmentos :: Cabecera}"></div>
 
-<!--Contenido principal-->
+<!-- Contenido principal -->
 <div class="container-fluid my-4">
-    <div class="col-md-9">
+    <div class="col-md-9 mx-auto">
         <div class="agenda-container">
-            <h4><i class="bi bi-calendar-check"></i> Mis Mascotas</h4>
+            <h4><i class="fa-solid fa-paw"></i> Mis Mascotas</h4>
 
             <!-- Iterar sobre las mascotas -->
-            <div th:each="c : ${citas}" class="cita-card card mb-3 shadow-sm">
-                <div class="cita-header card-header d-flex justify-content-between align-items-center">
+            <div th:each="m : ${mascotas}" class="card mb-3 shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
-                        <i class="bi bi-calendar-event"></i>
-                        <span th:text="${#temporals.format(c.fecha, 'dd/MM/yyyy')}"></span>
-                        - <span th:text="${c.hora}"></span>
+                        <i class="fa-solid fa-paw"></i>
+                        <span th:text="${m.nombre}"></span>
                     </h5>
-                    <span class="estado badge" th:text="${c.estado}" th:class="'badge ' + ${c.estadoCssClass}"></span>
+                    <!-- Icono de alerta si tiene citas próximas -->
+                    <i class="bi bi-exclamation-triangle-fill text-warning" th:if="${m.alerta}" title="Cita próxima"></i>
                 </div>
 
-                <div class="cita-body card-body">
-                    <p><i class="fa-solid fa-paw"></i> <strong>Mascota:</strong> <span th:text="${c.mascota.nombre}"></span></p>
-                    <p><i class="fa-regular fa-hospital"></i> <strong>Veterinaria:</strong> <span th:text="${c.veterinaria.nombre}"></span></p>
-                    <p><i class="fa-solid fa-user-doctor"></i> <strong>Veterinario:</strong>
-                        <span th:text="${c.veterinario != null ? c.veterinario.nombre : 'Sin asignar'}"></span>
+                <div class="card-body">
+                    <p><i class="bi bi-box"></i> <strong>Tipo:</strong> <span th:text="${m.tipo}"></span></p>
+                    <p><i class="bi bi-fingerprint"></i> <strong>Raza:</strong> <span th:text="${m.raza != null ? m.raza : 'No especificada'}"></span></p>
+                    <p><i class="bi bi-calendar2-week"></i> <strong>Fecha Nac.:</strong>
+                        <span th:text="${#temporals.format(m.fechaNacimiento, 'dd/MM/yyyy')}"></span>
                     </p>
-                    <p><i class="fa-regular fa-message"></i> <strong>Comentarios:</strong>
-                        <span th:text="${c.comentarios}"></span>
+                    <p>
+                        <i class="bi bi-gender-ambiguous"></i>
+                        <strong>Género:</strong>
+                        <span class="badge"
+                              th:classappend="${m.genero.name() == 'MACHO' ? 'bg-primary' :
+                          (m.genero.name() == 'HEMBRA' ? 'bg-pink' : 'bg-secondary')}"
+                              th:text="${m.genero}">
+                        </span>
                     </p>
-                    <p><i class="bi bi-file-medical"></i> <strong>Historial del Veterinario:</strong>
-                        <span th:text="${c.historialVeterinario != null ? c.historialVeterinario : 'No disponible'}"></span>
+                    <p><i class="bi bi-journal-medical"></i> <strong>Observaciones médicas:</strong>
+                        <span th:text="${m.observacionesMedicas != null ? m.observacionesMedicas : 'Ninguna'}"></span>
                     </p>
                 </div>
             </div>
@@ -48,12 +52,10 @@
     </div>
 </div>
 
-<!--Footer-->
-<footer class="footer mt-auto mt-2 text-white" th:insert="~{fragmentos :: Pie}">
-</footer>
+<!-- Footer -->
+<footer class="footer mt-auto mt-2 text-white" th:insert="~{fragmentos :: Pie}"></footer>
 
-<!-- Librerías de js-->
+<!-- Librerías js -->
 <th:block th:insert="~{fragmentos :: Links-js}"/>
 </body>
-
 </html>
