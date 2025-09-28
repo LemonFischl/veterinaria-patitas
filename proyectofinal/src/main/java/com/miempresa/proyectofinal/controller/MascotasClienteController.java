@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+// Solo para usuarios con rol "CLIENTE"
 @Controller
 @RequestMapping("/paciente/mis-mascotas")
 public class MascotasClienteController {
