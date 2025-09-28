@@ -40,8 +40,10 @@
                     <li><a th:href="@{/}">Inicio</a></li>
                     <li><a th:href="@{/veterinarias}">Veterinarias</a></li>
                     <li><a th:href="@{/adopcion}">Adopción</a></li>
-                    <li sec:authorize="hasRole('PACIENTE')"><a th:href="@{/paciente/mis-citas/listar}">Mis Citas</a></li>
-                    <li sec:authorize="hasRole('PACIENTE')"><a th:href="@{/paciente/mis-mascotas/listar}">Mis Mascotas</a></li>
+                    <li sec:authorize="hasRole('PACIENTE')"><a th:href="@{/paciente/mis-citas/listar}">Mis Citas</a>
+                    </li>
+                    <li sec:authorize="hasRole('PACIENTE')"><a th:href="@{/paciente/mis-mascotas/listar}">Mis
+                        Mascotas</a></li>
 
                     <!-- Dropdown Gestión -->
                     <li sec:authorize="hasAnyRole('ADMIN','VET','PACIENTE')" class="dropdown">
@@ -115,7 +117,6 @@
 </div>
 
 
-
 <div th:fragment="Pie" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="container-fluid text-center content-75">
         <div class="row g-0">
@@ -138,7 +139,8 @@
                     <li class="list-items"><a th:href="@{/adopcion}">Adopción</a></li>
                     <li class="list-items"><a th:href="@{/blog}">Blog</a></li>
                     <li class="list-items"><a href="#">Política de privacidad</a></li>
-                    <li class="list-items"><a href="https://consumidor.gob.pe/libro-de-reclamaciones/">Libro de reclamaciones</a></li>
+                    <li class="list-items"><a href="https://consumidor.gob.pe/libro-de-reclamaciones/">Libro de
+                        reclamaciones</a></li>
                 </ul>
             </div>
 
@@ -162,7 +164,8 @@
 
             <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-start text-black">
                 <p class="list-items mb-1 mb-md-0">&copy; 2025 Patitas al Rescate</p>
-                <p class="list-items">Desarrollado con <i class="fa-solid fa-heart"></i> por <strong>Heber</strong> y <strong>Sofía</strong></p>
+                <p class="list-items">Desarrollado con <i class="fa-solid fa-heart"></i> por <strong>Heber</strong> y
+                    <strong>Sofía</strong></p>
             </div>
 
         </div>
@@ -170,12 +173,12 @@
 </div>
 
 <!-- Links de librerias js -->
-    <th:block th:fragment="Links-js" xmlns:th="http://www.w3.org/1999/xhtml">
+<th:block th:fragment="Links-js" xmlns:th="http://www.w3.org/1999/xhtml">
     <!--CDN Bootstrap JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
-        <script src="/js/fragmentos.js"></script>
+    <script src="/js/fragmentos.js"></script>
 
     <!-- DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -192,8 +195,5 @@
                 });
             });
         });
-
-});
-
     </script>
 </th:block>
