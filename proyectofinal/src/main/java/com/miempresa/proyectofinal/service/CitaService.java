@@ -44,8 +44,8 @@ public class CitaService {
         return citaRepository.existsById(idCita);
     }
 
-    // Ejecuta todos los días cada 10 segundos
-    @Scheduled(cron = "*/10 * * * * *")
+    // Ejecuta todos los días cada 2 minutos
+    @Scheduled(cron = "0 */2 * * * *")
 
     public void actualizarEstadosCita() {
         List<Cita> citas = citaRepository.findAll();

@@ -11,9 +11,9 @@
 <div th:replace="~{fragmentos :: Cabecera}"></div>
 
 <div class="main-container">
-        <!-- FORMULARIO DE REGISTRO DE CITA -->
-        <div class="form-container">
-            <div class="form-card">
+    <!-- FORMULARIO DE REGISTRO DE CITA -->
+    <div class="form-container">
+        <div class="form-card">
             <div class="card-header">
                 <h4><i class="bi bi-calendar-plus"></i> Registrar Cita</h4>
             </div>
@@ -50,29 +50,29 @@
                            sec:authorize="hasRole('PACIENTE')"/>
 
                     <div class="form-row" sec:authorize="hasAnyRole('ADMIN','VET')">
-                        <div class="form-group">
-                            <label><i class="bi bi-person-badge"></i> Paciente</label>
-                            <select id="usuarioSelect" th:field="*{usuario.id_usuario}" required>
-                                <option value="" disabled selected>Seleccione paciente</option>
-                                <option th:each="u : ${usuarios}" th:value="${u.id_usuario}" th:text="${u.username}"></option>
-                            </select>
-                            <div th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}" class="error"></div>
-                            <div th:if="${#fields.hasErrors('usuario.id_usuario')}" th:errors="*{usuario.id_usuario}" class="error"></div>
-                        </div>
+                        <label><i class="bi bi-person-badge"></i> Paciente</label>
+                        <select id="usuarioSelect" th:field="*{usuario.id_usuario}" required>
+                            <option value="" disabled selected>Seleccione paciente</option>
+                            <option th:each="u : ${usuarios}" th:value="${u.id_usuario}"
+                                    th:text="${u.username}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}" class="error"></div>
+                        <div th:if="${#fields.hasErrors('usuario.id_usuario')}" th:errors="*{usuario.id_usuario}"
+                             class="error"></div>
+                    </div>
 
-                        <!-- Mascotas -->
-                        <div class="form-group">
-                            <label for="mascotaSelect"><i class="fa-solid fa-paw"></i> Mascota</label>
-                            <select id="mascotaSelect" th:field="*{mascota.id_mascota}" required>
-                                <option value="" disabled selected>Seleccione mascota</option>
-                                <option th:each="m : ${mascotas}"
-                                        th:value="${m.id_mascota}"
-                                        th:text="${m.nombre}"
-                                        th:attr="data-usuario-id=${m.usuario.id_usuario}">
-                                </option>
-                            </select>
-                            <div th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}" class="error"></div>
-                        </div>
+                    <!-- Mascotas -->
+                    <div class="form-group">
+                        <label for="mascotaSelect"><i class="fa-solid fa-paw"></i> Mascota</label>
+                        <select id="mascotaSelect" th:field="*{mascota.id_mascota}" required>
+                            <option value="" disabled selected>Seleccione mascota</option>
+                            <option th:each="m : ${mascotas}"
+                                    th:value="${m.id_mascota}"
+                                    th:text="${m.nombre}"
+                                    th:attr="data-usuario-id=${m.usuario.id_usuario}">
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('mascota')}" th:errors="*{mascota}" class="error"></div>
                     </div>
 
                     <!-- Veterinaria y veterinario -->
@@ -81,16 +81,20 @@
                             <label for="veterinaria"><i class="fa-regular fa-hospital"></i> Veterinaria</label>
                             <select id="veterinaria" th:field="*{veterinaria.id_vet}" required>
                                 <option value="" disabled selected>Seleccione una veterinaria</option>
-                                <option th:each="v : ${veterinarias}" th:value="${v.id_vet}" th:text="${v.nombre}" th:attr="data-servicios=${v.serviciosGenerales}, data-estado=${v.estadoVet}"></option>
+                                <option th:each="v : ${veterinarias}" th:value="${v.id_vet}" th:text="${v.nombre}"
+                                        th:attr="data-servicios=${v.serviciosGenerales}, data-estado=${v.estadoVet}"></option>
                             </select>
-                            <div th:if="${#fields.hasErrors('veterinaria')}" th:errors="*{veterinaria}" class="error"></div>
+                            <div th:if="${#fields.hasErrors('veterinaria')}" th:errors="*{veterinaria}"
+                                 class="error"></div>
                         </div>
 
                         <div class="form-group">
                             <label><i class="fa-solid fa-user-doctor"></i> Veterinario</label>
                             <select id="veterinarioSelect" th:field="*{veterinario.id_veterinario}">
                                 <option value="">Sin asignar</option>
-                                <option th:each="vet : ${veterinarios}" th:value="${vet.id_veterinario}" th:text="${vet.nombre}" th:attr="data-vet-vet=${vet.veterinaria.id_vet}"></option>
+                                <option th:each="vet : ${veterinarios}" th:value="${vet.id_veterinario}"
+                                        th:text="${vet.nombre}"
+                                        th:attr="data-vet-vet=${vet.veterinaria.id_vet}"></option>
                             </select>
                         </div>
                     </div>
@@ -144,7 +148,7 @@
                 </form>
             </div>
         </div>
-        </div>
+    </div>
 
     <!-- TABLA DE CITAS -->
     <div class="table-container">
