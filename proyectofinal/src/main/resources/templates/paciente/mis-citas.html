@@ -77,7 +77,71 @@
         <!-- Listado de citas -->
         <div class="col-md-9">
             <div class="agenda-container">
-                <h4><i class="bi bi-calendar-check"></i> Mis Citas</h4>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4><i class="bi bi-calendar-check"></i> Mis Citas</h4>
+                    <button class="btn btn-success" data-bs-toggle="collapse" data-bs-target="#formNuevaCita" aria-expanded="false" aria-controls="formNuevaCita">
+                        <i class="bi bi-plus-circle"></i> Nueva cita
+                    </button>
+                </div>
+
+                <div class="collapse mb-4" id="formNuevaCita">
+                    <div class="card card-body">
+                        <form th:action="@{/paciente/mis-citas/guardar}" method="post" th:object="${nuevaCita}">
+                            <input type="hidden" th:field="*{id_cita}"/>
+
+                            <!-- Mascota -->
+                            <div class="mb-3">
+                                <label><i class="fa-solid fa-paw"></i> Mascota</label>
+                                <select class="form-select" th:field="*{mascota.id_mascota}" required>
+                                    <option value="" disabled selected>Seleccione mascota</option>
+                                    <option th:each="m : ${mascotas}" th:value="${m.id_mascota}" th:text="${m.nombre}"></option>
+                                </select>
+                            </div>
+
+                            <!-- Veterinaria -->
+                            <div class="mb-3">
+                                <label><i class="fa-regular fa-hospital"></i> Veterinaria</label>
+                                <select id="veterinaria" class="form-select" th:field="*{veterinaria.id_vet}" required>
+                                    <option value="" disabled selected>Seleccione veterinaria</option>
+                                    <option th:each="v : ${veterinarias}" th:value="${v.id_vet}" th:text="${v.nombre}"
+                                            th:attr="data-servicios=${v.serviciosGenerales}, data-estado=${v.estadoVet}"></option>
+                                </select>
+                            </div>
+
+                            <!-- Servicios -->
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-briefcase"></i> Servicios disponibles</label>
+                                <ul id="serviciosVeterinaria" class="list"></ul>
+                            </div>
+
+                            <!-- Fecha -->
+                            <div class="mb-3">
+                                <label><i class="fa-regular fa-calendar-days"></i> Fecha</label>
+                                <input type="date" class="form-control" th:field="*{fecha}" required>
+                            </div>
+
+                            <!-- Hora -->
+                            <div class="mb-3">
+                                <label><i class="fa-regular fa-clock"></i> Hora</label>
+                                <input type="time" class="form-control" th:field="*{hora}" required>
+                            </div>
+
+                            <!-- Comentarios -->
+                            <div class="mb-3">
+                                <label><i class="fa-regular fa-message"></i> Comentarios</label>
+                                <textarea class="form-control" th:field="*{comentarios}" rows="2"></textarea>
+                            </div>
+
+                            <!-- Botón -->
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle"></i> Guardar
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
 
                 <!-- Iterar sobre las citas -->
                 <div th:each="c : ${citas}" class="cita-card card mb-3 shadow-sm">
@@ -115,6 +179,9 @@
 
 <!-- Librerías de js-->
 <th:block th:insert="~{fragmentos :: Links-js}"/>
+
+<!-- Funcionalidad dinámica -->
+<script th:src="@{/js/cita.js}"></script>
 </body>
 
 </html>
