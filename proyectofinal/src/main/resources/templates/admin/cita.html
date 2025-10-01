@@ -49,11 +49,12 @@
                            th:value="${cita.usuario != null ? cita.usuario.id_usuario : null}"
                            sec:authorize="hasRole('PACIENTE')"/>
 
-                    <div class="form-row" sec:authorize="hasAnyRole('ADMIN','VET')">
+                    <div class="form-group" sec:authorize="hasAnyRole('ADMIN','VET')">
                         <label><i class="bi bi-person-badge"></i> Paciente</label>
                         <select id="usuarioSelect" th:field="*{usuario.id_usuario}" required>
                             <option value="" disabled selected>Seleccione paciente</option>
-                            <option th:each="u : ${usuarios}" th:value="${u.id_usuario}"
+                            <option th:each="u : ${usuarios}"
+                                    th:value="${u.id_usuario}"
                                     th:text="${u.username}"></option>
                         </select>
                         <div th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}" class="error"></div>
@@ -209,8 +210,9 @@
                                 <a th:href="@{/admin/cita/editar(id=${c.id_cita})}" class="btn-action btn-edit">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <a th:href="@{/admin/cita/eliminar(id=${c.id_cita})}" class="btn-action btn-delete"
-                                   onclick="return confirm('¿Seguro que desea eliminar esta cita?')">
+                                <a href="#"
+                                   class="btn-action btn-delete"
+                                   th:attr="data-url=@{/admin/cita/eliminar(id=${c.id_cita})}">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </div>
