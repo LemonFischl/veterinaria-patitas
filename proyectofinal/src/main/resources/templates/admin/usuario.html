@@ -164,10 +164,9 @@
                                title="Editar usuario">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a th:href="@{/admin/usuario/eliminar(id=${u.id_usuario})}"
-                               class="btn-action btn-delete"
-                               title="Eliminar usuario"
-                               onclick="return confirm('¿Está seguro que desea eliminar este usuario?\n\nEsta acción no se puede deshacer.')">
+                            <a href="#"
+                               th:attr="data-url=@{/admin/usuario/eliminar(id=${u.id_usuario})}"
+                               class="btn-action btn-delete">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </td>
