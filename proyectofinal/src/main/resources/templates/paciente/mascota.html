@@ -150,8 +150,9 @@
                             <a th:href="@{/paciente/mascota/editar(id=${m.id_mascota})}" class="btn-action btn-edit" title="Editar">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a th:href="@{/paciente/mascota/eliminar(id=${m.id_mascota})}" class="btn-action btn-delete" title="Eliminar"
-                               onclick="return confirm('¿Seguro que desea eliminar esta mascota?')">
+                            <a href="#"
+                               th:attr="data-url=@{/paciente/mascota/eliminar(id=${m.id_mascota})}"
+                               class="btn-action btn-delete">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </td>
