@@ -207,10 +207,9 @@
                                title="Editar">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a th:href="@{/vet/veterinaria/eliminar(id=${u.id_vet})}"
-                               class="btn-action btn-delete"
-                               title="Eliminar"
-                               onclick="return confirm('¿Seguro que desea eliminar esta veterinaria?')">
+                            <a href="#"
+                               th:attr="data-url=@{/vet/veterinaria/eliminar(id=${u.id_vet})}"
+                               class="btn-action btn-delete">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </td>
