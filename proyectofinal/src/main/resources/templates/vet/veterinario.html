@@ -24,7 +24,8 @@
             </div>
 
             <div class="form-body">
-                <form method="post" th:action="@{/vet/veterinario/guardar}" th:object="${veterinario}" class="compact-form">
+                <form method="post" th:action="@{/vet/veterinario/guardar}" th:object="${veterinario}"
+                      class="compact-form">
 
                     <!-- Mensaje de éxito -->
                     <div th:if="${exito}" class="alert-success">
@@ -40,7 +41,7 @@
                         <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
                     </div>
 
-                    <input type="hidden" th:field="*{id_veterinario}" />
+                    <input type="hidden" th:field="*{id_veterinario}"/>
 
                     <div class="form-group">
                         <label><i class="fa-solid fa-user-doctor"></i> Nombre del Veterinario</label>
@@ -64,7 +65,8 @@
                         <div class="form-group">
                             <label><i class="bi bi-phone"></i> Celular</label>
                             <input type="text" th:field="*{celular}" placeholder="Ej: 987654321"/>
-                            <div class="text-danger" th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}"></div>
+                            <div class="text-danger" th:if="${#fields.hasErrors('celular')}"
+                                 th:errors="*{celular}"></div>
                         </div>
                         <div class="form-group">
                             <label><i class="bi bi-envelope"></i> Correo Electrónico</label>
@@ -76,23 +78,30 @@
                     <div class="form-group">
                         <label><i class="fa-regular fa-clock"></i> Horario de Atención</label>
                         <input type="text" th:field="*{horarioAtencion}" placeholder="Ej: 9:00 AM - 5:00 PM"/>
-                        <div class="text-danger" th:if="${#fields.hasErrors('horarioAtencion')}" th:errors="*{horarioAtencion}"></div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('horarioAtencion')}"
+                             th:errors="*{horarioAtencion}"></div>
                     </div>
 
                     <div class="form-group">
                         <label><i class="fa-regular fa-calendar-days"></i> Fecha de Contratación</label>
                         <input type="date" th:field="*{fechaContratacion}"/>
-                        <div class="text-danger" th:if="${#fields.hasErrors('fechaContratacion')}" th:errors="*{fechaContratacion}"></div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('fechaContratacion')}"
+                             th:errors="*{fechaContratacion}"></div>
                     </div>
 
                     <div class="form-group">
                         <label><i class="fa-regular fa-hospital"></i> Veterinaria</label>
                         <select th:field="*{veterinaria.id_vet}">
-                            <option th:value="'0'" th:text="'Seleccione una veterinaria'" th:if="${#fields.hasErrors('veterinaria') or #fields.hasErrors('veterinaria.id_vet')}" selected></option>
-                            <option th:each="vet : ${veterinarias}" th:value="${vet.id_vet}" th:text="${vet.nombre}"></option>
+                            <option th:value="'0'" th:text="'Seleccione una veterinaria'"
+                                    th:if="${#fields.hasErrors('veterinaria') or #fields.hasErrors('veterinaria.id_vet')}"
+                                    selected></option>
+                            <option th:each="vet : ${veterinarias}" th:value="${vet.id_vet}"
+                                    th:text="${vet.nombre}"></option>
                         </select>
-                        <div class="text-danger" th:if="${#fields.hasErrors('veterinaria')}" th:errors="*{veterinaria}"></div>
-                        <div class="text-danger" th:if="${#fields.hasErrors('veterinaria.id_vet')}" th:errors="*{veterinaria.id_vet}"></div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('veterinaria')}"
+                             th:errors="*{veterinaria}"></div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('veterinaria.id_vet')}"
+                             th:errors="*{veterinaria.id_vet}"></div>
                     </div>
 
                     <!-- Botones de acción -->
@@ -149,9 +158,8 @@
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-                               th:href="@{/vet/veterinario/eliminar(id=${v.id_veterinario})}"
-                               class="btn-action btn-delete" title="Eliminar"
-                               onclick="return confirm('¿Seguro que desea eliminar este veterinario?')">
+                               href="#"
+                               th:attr="data-url=@{/vet/veterinario/eliminar(id=${v.id_veterinario})}">
                                 <i class="bi bi-trash"></i>
 
                             </a>
@@ -164,7 +172,7 @@
     </div>
 
 </div>
-    <!--Footer-->
+<!--Footer-->
 <footer class="footer mt-auto mt-2 text-white" th:insert="~{fragmentos :: Pie}"></footer>
 
 <!-- Librerías de js -->
